@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal class Udrt
+    public class User
     {
+        public int Id { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public List<UserToRepository> Repositories { get; set; }
     }
 }

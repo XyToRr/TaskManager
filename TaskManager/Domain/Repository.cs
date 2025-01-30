@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    internal class Repository
+    public class Repository
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<TaskModel> Tasks;
+        public List<UserToRepository> Users { get; set; }
     }
 }
