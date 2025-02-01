@@ -19,9 +19,29 @@ namespace DLL.Context
         {
             SetUpTaskModelLinks(modelBuilder);
             SetUpUserRepositoryManyToMany(modelBuilder);
+            SetUpChecksToModels(modelBuilder);
         }
 
-        private static void SetUpTaskModelLinks(ModelBuilder modelBuilder)
+        private void SetUpChecksToModels(ModelBuilder modelBuilder)
+        {
+
+
+            modelBuilder.Entity<Project> ()
+                .Property(p => p.Name)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            modelBuilder.Entity<Project>()
+                .Property(t => t.Description)
+                .IsRequired()
+                .HasMaxLength(1024);
+
+
+
+           
+        }
+
+        private void SetUpTaskModelLinks(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TaskModel>()
                 .HasOne(t => t.Repository)
@@ -45,7 +65,7 @@ namespace DLL.Context
                 .HasForeignKey(c => c.TaskId);
         }
 
-        private static void SetUpUserRepositoryManyToMany(ModelBuilder modelBuilder)
+        private void SetUpUserRepositoryManyToMany(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserToRepository>().HasKey(ur => new { ur.RepositoryId, ur.UserId });
 
