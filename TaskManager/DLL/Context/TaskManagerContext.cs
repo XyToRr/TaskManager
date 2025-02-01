@@ -26,19 +26,55 @@ namespace DLL.Context
         {
 
 
-            modelBuilder.Entity<Project> ()
-                .Property(p => p.Name)
-                .IsRequired()
-                .HasMaxLength(256);
-
-            modelBuilder.Entity<Project>()
-                .Property(t => t.Description)
-                .IsRequired()
-                .HasMaxLength(1024);
 
 
+            modelBuilder.Entity<Project>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Name).IsRequired().HasMaxLength(256);
+                entity.Property(p => p.Description).IsRequired().HasMaxLength(1024);
+                entity.Property(p => p.CreatedAt).IsRequired();
+            });
 
-           
+
+            modelBuilder.Entity<TaskComment>(entity =>
+            {
+                entity.HasKey(c => c.Id);
+                entity.Property(c => c.Content).IsRequired().HasMaxLength(1024);
+
+            });
+
+
+            modelBuilder.Entity<TaskModel>(entity =>
+            {
+                entity.HasKey(t => t.Id);
+                entity.Property(t => t.Name).IsRequired().HasMaxLength(256);
+                entity.Property(t => t.Description).IsRequired().HasMaxLength(1024);
+                entity.Property(t => t.CreatedAt).IsRequired();
+                entity.Property(t => t.DeadLine).IsRequired();
+
+                entity.Property(t => t.Priority).IsRequired().HasConversion<string>();
+                entity.Property(t => t.Status).IsRequired().HasConversion<string>();
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasKey(u => u.Id);
+                entity.Property(u => u.Login).IsRequired().HasMaxLength(256);
+                entity.Property(u => u.PasswordHash).IsRequired().HasMaxLength(512);
+                entity.Property(u => u.FirstName).IsRequired().HasMaxLength(256);
+                entity.Property(u => u.LastName).IsRequired().HasMaxLength(256);
+                entity.Property(u => u.CreatedAt).IsRequired();
+            });
+
+            modelBuilder.Entity<UserToRepository>(entity =>
+            {
+
+                entity.Property(ur => ur.Role).IsRequired().HasConversion<string>();
+            });
+
+
+
         }
 
         private void SetUpTaskModelLinks(ModelBuilder modelBuilder)
