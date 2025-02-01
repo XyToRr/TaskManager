@@ -14,7 +14,7 @@ namespace DLL.Context
         public DbSet<TaskComment> TaskComments { get; set; }
         public DbSet<TaskModel> TaskModels { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserToRepository> UsersToRepositories { get; set; }
+        public DbSet<UserToProject> UsersToRepositories { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SetUpTaskModelLinks(modelBuilder);
@@ -47,14 +47,14 @@ namespace DLL.Context
 
         private static void SetUpUserRepositoryManyToMany(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserToRepository>().HasKey(ur => new { ur.RepositoryId, ur.UserId });
+            modelBuilder.Entity<UserToProject>().HasKey(ur => new { ur.RepositoryId, ur.UserId });
 
-            modelBuilder.Entity<UserToRepository>()
+            modelBuilder.Entity<UserToProject>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.Repositories)
                 .HasForeignKey(ur => ur.UserId);
 
-            modelBuilder.Entity<UserToRepository>()
+            modelBuilder.Entity<UserToProject>()
                 .HasOne(ur => ur.Repository)
                 .WithMany(r => r.Users)
                 .HasForeignKey(ur => ur.UserId);

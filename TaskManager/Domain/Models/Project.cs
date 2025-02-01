@@ -13,6 +13,6 @@ namespace Domain.Models
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public virtual List<TaskModel> Tasks { get; set; } = new();
-        public virtual List<UserToRepository> Users { get; set; } = new();
+        public virtual List<UserToProject> Users { get; set; } = new();
     }
 }

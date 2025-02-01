@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class UserToRepository
+    public class UserToProject
     {
         public int RepositoryId { get; set; }
         public Project Repository { get; set; }
