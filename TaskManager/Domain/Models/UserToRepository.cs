@@ -10,7 +10,7 @@ namespace Domain.Models
     public class UserToRepository
     {
         public int RepositoryId { get; set; }
-        public Repository Repository { get; set; }
+        public Project Repository { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
         public Role Role { get; set; }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.Models
 {
-    public class Repository
+    public class Project
     {
         public int Id { get; set; }
         public string Name { get; set; }

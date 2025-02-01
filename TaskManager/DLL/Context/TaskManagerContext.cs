@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL
+namespace DLL.Context
 {
     class TaskManagerContext : DbContext
     {
-        public DbSet<Repository> Repositories { get; set; }
+        public DbSet<Project> Repositories { get; set; }
         public DbSet<TaskComment> TaskComments { get; set; }
         public DbSet<TaskModel> TaskModels { get; set; }
         public DbSet<User> Users { get; set; }

@@ -16,7 +16,7 @@ namespace Domain.Models
         public Priority Priority { get; set; }
         public Status Status { get; set; }
         public int RepositoryId { get; set; }
-        public virtual Repository Repository { get; set; }
+        public virtual Project Repository { get; set; }
         public int CreatedUserId { get; set; }
         public virtual User CreatedUser { get; set; }
         public int? AssignedUserId { get; set; }
