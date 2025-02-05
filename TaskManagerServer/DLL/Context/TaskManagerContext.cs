@@ -15,6 +15,11 @@ namespace DLL.Context
         public DbSet<TaskModel> TaskModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserToProject> UsersToRepositories { get; set; }
+
+        public TaskManagerContext(DbContextOptions<TaskManagerContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SetUpTaskModelLinks(modelBuilder);

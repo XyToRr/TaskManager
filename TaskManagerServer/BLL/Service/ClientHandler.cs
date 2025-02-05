@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace BLL.Service
 
         private StreamReader reader;
         private StreamWriter writer;
+
+        private UserService userService;
         public ClientHandler(TcpClient client, TaskManagerServer server) 
         {
             this.client = client;
@@ -26,6 +29,8 @@ namespace BLL.Service
             var stream = this.client.GetStream();
             reader = new StreamReader(stream);
             writer = new StreamWriter(stream) { AutoFlush = true };
+
+            userService = DependencyInjector.ServiceProvider.GetService<UserService>();
         }
 
         public async Task HandleClientAsync()
@@ -56,6 +61,7 @@ namespace BLL.Service
             switch (message.MessageType)
             {
                 case MessageType.RegisterRequest:
+                    HandleRegisterRequest(message.Content);
                     break;
                 case MessageType.LoginRequest:
                     break;
@@ -76,6 +82,22 @@ namespace BLL.Service
                 case MessageType.AddUserToProject:
                     break;
             }
+        }
+
+        private async void HandleRegisterRequest(string requestData)
+        {
+            var userInfo = JsonSerializer.Deserialize<User>(requestData);
+            if(userInfo == null)
+            {
+                return;
+            }
+            if (userService.GetByCondition(u => u.Login == userInfo.Login && u.PasswordHash == userInfo.PasswordHash).First() != null)
+            {
+                return;
+            }
+
+            userService.AddAsync(userInfo);
+            userService.
         }
     }
 }
