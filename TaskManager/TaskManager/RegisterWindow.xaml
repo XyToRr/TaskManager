@@ -5,20 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="360" Width="400">
+        Title="RegisterWindow" Height="500" Width="400"
+        Background="{StaticResource BackgroundBrush}">
     <Grid>
         <StackPanel Orientation="Vertical" Margin="30">
-            <Label Content="Login" FontSize="15"/>
-            <TextBox x:Name="LoginTextBox" Margin="5 0"/>
-            <Label Content="Password" FontSize="15"/>
-            <TextBox x:Name="PasswordTextBox" Margin="5 0"/>
-            <Label Content="Password repeat" FontSize="15"/>
-            <TextBox x:Name="PasswordRepeatTextBox" Margin="5 0"/>
-            <Label Content="First name" FontSize="15"/>
-            <TextBox x:Name="FirstNameTextBox" Margin="5 0"/>
-            <Label Content="Last name" FontSize="15"/>
-            <TextBox x:Name="LastNameTextBox" Margin="5 0"/>
-            <Button Content="Register" Margin="20" Click="RegisterButton_Click"/>
+            <Label Content="Login" />
+            <TextBox x:Name="LoginTextBox" />
+            <Label Content="Password" />
+            <TextBox x:Name="PasswordTextBox" />
+            <Label Content="Password repeat" />
+            <TextBox x:Name="PasswordRepeatTextBox" />
+            <Label Content="First name" />
+            <TextBox x:Name="FirstNameTextBox" />
+            <Label Content="Last name" />
+            <TextBox x:Name="LastNameTextBox" />
+            <Button Content="Register" Margin="80,20" Click="RegisterButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

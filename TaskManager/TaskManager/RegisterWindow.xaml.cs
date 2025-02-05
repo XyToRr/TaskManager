@@ -26,10 +26,14 @@ namespace TaskManager
 
         private async void ClearForm()
         {
-
+            LoginTextBox.Text = string.Empty;
+            PasswordTextBox.Text = string.Empty;
+            PasswordRepeatTextBox.Text = string.Empty;
+            FirstNameTextBox.Text = string.Empty;
+            LastNameTextBox.Text = string.Empty;
         }
 
-        private async Task<bool> ConfirmRegister()
+        private async Task<bool> ValidateRegister()
         {
 
             if (string.IsNullOrWhiteSpace(LoginTextBox.Text))
@@ -73,8 +77,8 @@ namespace TaskManager
             }
 
 
-            //Метод реєстрації юзера
-            return false;
+            
+            
 
 
             return true;
@@ -82,9 +86,16 @@ namespace TaskManager
         }
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (await ConfirmRegister())
+            if (await ValidateRegister())
             {
+                //Метод реєстрації юзера
+
+
                 MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                ClearForm();
             }
         }
     }
