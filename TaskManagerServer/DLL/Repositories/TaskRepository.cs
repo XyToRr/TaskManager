@@ -21,13 +21,18 @@ namespace DLL.Repositories
         public async Task AddAsync(TaskModel entity)
         {
             await Task.Run(() => _context.TaskModels.Add(entity));
+            await SaveAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             var task = await GetByCondition(u => u.Id == id).FirstAsync();
             if (task != null)
+            {
                 _context.TaskModels.Remove(task);
+                await SaveAsync();
+            }
+                
         }
 
         public IQueryable<TaskModel> GetAll() => _context.TaskModels;

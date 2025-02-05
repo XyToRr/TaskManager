@@ -22,13 +22,18 @@ namespace DLL.Repositories
         public async Task AddAsync(Project entity)
         {
             await Task.Run(() => _context.Repositories.Add(entity));
+            await SaveAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             var project = await GetByCondition(u => u.Id == id).FirstAsync();
             if (project != null)
+            {
                 _context.Repositories.Remove(project);
+                await SaveAsync();
+            }
+                
         }
 
         public IQueryable<Project> GetAll() => _context.Repositories;

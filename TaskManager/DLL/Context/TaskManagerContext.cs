@@ -15,6 +15,7 @@ namespace DLL.Context
         public DbSet<TaskModel> TaskModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserToProject> UsersToRepositories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SetUpTaskModelLinks(modelBuilder);

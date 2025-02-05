@@ -21,13 +21,18 @@ namespace DLL.Repositories
         public async Task AddAsync(TaskComment entity)
         {
             await Task.Run(() => _context.TaskComments.Add(entity));
+            await SaveAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
             var comment = await GetByCondition(u => u.Id == id).FirstAsync();
             if (comment != null)
+            {
                 _context.TaskComments.Remove(comment);
+                await SaveAsync();
+            }
+                
         }
 
         public IQueryable<TaskComment> GetAll() => _context.TaskComments;
