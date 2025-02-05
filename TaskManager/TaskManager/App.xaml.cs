@@ -29,6 +29,7 @@ namespace TaskManager
             services.AddSingleton<TaskManagerClient>();
 
             services.AddTransient<LoginWindow>();
+            services.AddTransient<RegisterWindow>();
 
         }
     }

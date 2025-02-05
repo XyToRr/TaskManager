@@ -4,16 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
-        mc:Ignorable="d"
-        Title="Login" Height="250" Width="450">
-    <Grid>
+        
+        Title="Login" Height="300" Width="450"  
+        Background="{StaticResource BackgroundBrush}"
+        >
+   
+       
+        <Grid>
         <StackPanel Orientation="Vertical" Margin="30">
-            <Label Content="Login" FontSize="15"/>
-            <TextBox x:Name="LoginTextBox" Margin="5 0"/>
-            <Label Content="Password" FontSize="15"/>
-            <TextBox x:Name="PasswordTextBox" Margin="5 0"/>
+            <Label Content="Login"/>
+            <TextBox x:Name="LoginTextBox" />
+            <Label Content="Password" />
+            <TextBox x:Name="PasswordTextBox" />
 
-            <Button Content="Login" Margin="20" Click="LoginButton_Click"/>
+
+            <!--<StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center" >
+                <Button Content="Вхід"    Click="LoginButton_Click"/>
+                <Button Content="Реєстрація"   Click="LoginButton_Click"/>
+            </StackPanel>-->
+
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Content="Вхід"   Margin="10" Click="LoginButton_Click" Grid.Column="0"/>
+                <Button Content="Реєстрація" Margin="10"  Click="RegisterButton_Click" Grid.Column="1"/>
+            </Grid>
+            
+            
+            
         </StackPanel>
     </Grid>
 </Window>
