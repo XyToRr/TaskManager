@@ -8,6 +8,7 @@ namespace Domain.Models
 {
     public class Message
     {
+        public string Token { get; set; }
         public string Content { get; set; }
         public MessageType MessageType { get; set; }
     }

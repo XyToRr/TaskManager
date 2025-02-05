@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,9 @@ namespace BLL.Service
         private StreamWriter writer;
 
         private UserService userService;
+
+        private string clientToken;
+        private User user;
         public ClientHandler(TcpClient client, TaskManagerServer server) 
         {
             this.client = client;
@@ -64,6 +68,7 @@ namespace BLL.Service
                     HandleRegisterRequest(message.Content);
                     break;
                 case MessageType.LoginRequest:
+                    HandleLoginRequest(message.Content);
                     break;
                 case MessageType.RoleChange:
                     break;
@@ -84,20 +89,50 @@ namespace BLL.Service
             }
         }
 
-        private async void HandleRegisterRequest(string requestData)
+        private async Task HandleLoginRequest(string requestData)
         {
             var userInfo = JsonSerializer.Deserialize<User>(requestData);
-            if(userInfo == null)
+            if (userInfo == null)
+                await SendMessage(new Message { MessageType = MessageType.Decline });
+
+
+            user = FindUser(userInfo.Login, userInfo.PasswordHash);
+            if (user == null)
+                await SendMessage(new Message { MessageType = MessageType.Decline });
+
+            clientToken = GenerateToken();
+            await SendMessage(new Message
+            {
+                Token = clientToken,
+                Content = JsonSerializer.Serialize(user),
+                MessageType = MessageType.Accept
+            });
+        }
+
+        private string GenerateToken()
+        {
+            var myuuid = Guid.NewGuid();
+            return myuuid.ToString();
+        }
+        private async Task HandleRegisterRequest(string requestData)
+        {
+            var userInfo = JsonSerializer.Deserialize<User>(requestData);
+            if (userInfo == null)
             {
                 await SendMessage(new Message { MessageType = MessageType.Decline });
             }
-            if (userService.GetByCondition(u => u.Login == userInfo.Login && u.PasswordHash == userInfo.PasswordHash).First() != null)
+            if (FindUser(userInfo) != null)
             {
                 await SendMessage(new Message { MessageType = MessageType.Decline });
             }
 
             await userService.AddAsync(userInfo);
             await SendMessage(new Message { MessageType = MessageType.Accept });
+        }
+
+        private User FindUser(string login, string pass)
+        {
+            return userService.GetByCondition(u => u.Login == login && u.PasswordHash == pass).First();
         }
 
         public async Task SendMessage(Message message)

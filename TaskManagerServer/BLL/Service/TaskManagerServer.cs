@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,8 @@ namespace BLL.Service
     public class TaskManagerServer
     {
         private readonly TcpListener listener;
+        
+        private ConcurrentDictionary<string, int> handlers;
 
         public TaskManagerServer(IPAddress address, int port)
         {
