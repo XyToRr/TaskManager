@@ -89,15 +89,21 @@ namespace BLL.Service
             var userInfo = JsonSerializer.Deserialize<User>(requestData);
             if(userInfo == null)
             {
-                return;
+                await SendMessage(new Message { MessageType = MessageType.Decline });
             }
             if (userService.GetByCondition(u => u.Login == userInfo.Login && u.PasswordHash == userInfo.PasswordHash).First() != null)
             {
-                return;
+                await SendMessage(new Message { MessageType = MessageType.Decline });
             }
 
-            userService.AddAsync(userInfo);
-            userService.
+            await userService.AddAsync(userInfo);
+            await SendMessage(new Message { MessageType = MessageType.Accept });
+        }
+
+        public async Task SendMessage(Message message)
+        {
+            var messageJson = JsonSerializer.Serialize(message);
+            await writer.WriteLineAsync(messageJson);
         }
     }
 }
