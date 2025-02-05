@@ -14,8 +14,8 @@ namespace Domain.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime CreatedAt { get; set; }
-        public virtual List<UserToProject> Repositories { get; set; } = new();
-        public virtual List<TaskModel> CreatedTasks { get; set; } = new();
-        public virtual List<TaskModel> AssignedTasks { get; set; } = new();
+        public List<UserToProject> Repositories { get; set; } = new();
+        public List<TaskModel> CreatedTasks { get; set; } = new();
+        public List<TaskModel> AssignedTasks { get; set; } = new();
     }
 }
