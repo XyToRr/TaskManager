@@ -13,7 +13,7 @@ namespace BLL.Services
     {
         private readonly TcpClient _client;
 
-        public readonly Action<Task> _task;
+        public event Action<Message> MessageReceived;
         private StreamWriter _streamWriter;
         private StreamReader _streamReader;
         private readonly string _userName;
@@ -22,6 +22,7 @@ namespace BLL.Services
         {
             userName = _userName;
             _client = new TcpClient();
+
         }
 
         public async Task ConnectAsync(string ipAddress, int port)
@@ -42,10 +43,7 @@ namespace BLL.Services
                 if (messageJson == null) break;
 
                 var message = JsonSerializer.Deserialize<Message>(messageJson);
-                if (message != null)
-                {
-                    
-                }
+                MessageReceived?.Invoke(message);
             }
         }
 

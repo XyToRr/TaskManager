@@ -8,9 +8,11 @@ namespace Domain.Models
 {
     public enum MessageType
     {
-        Accept,
-        Decline,
+        RegisterAccept,
+        RegisterDecline,
         RegisterRequest,
+        LoginAccept,
+        LoginDecline,
         LoginRequest,
         RoleChange,
         ProjectCreationRequest,

@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLL.Services;
 
 namespace TaskManager
 {
@@ -16,9 +17,38 @@ namespace TaskManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly UserService _userService;
+        public MainWindow(UserService userService)
         {
+            _userService = userService;
+
+            _userService.RegisterRequestReceived += OnMessageRegisterReceived;
+            _userService.LoginRequestReceived += OnMessageLoginReceived;
             InitializeComponent();
+        }
+
+        private void OnMessageRegisterReceived(bool isRight)
+        {
+            if (isRight)
+            {
+                return;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private void OnMessageLoginReceived(bool isRight)
+        {
+            if (isRight)
+            {
+                return;
+            }
+            else
+            {
+                return;
+            }
         }
     }
 }
