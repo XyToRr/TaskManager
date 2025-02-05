@@ -8,10 +8,12 @@ namespace Domain.Models
 {
     public enum MessageType
     {
+        Connect,
+        Disconnect,
         RegisterAccept,
         RegisterDecline,
         LoginAccept,
-        RegisterDecline,
+        LoginDecline,
         RegisterRequest,
         LoginRequest,
         RoleChange,

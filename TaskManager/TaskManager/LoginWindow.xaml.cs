@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLL.Services;
 
 namespace TaskManager
 {
@@ -16,9 +17,12 @@ namespace TaskManager
     /// </summary>
     public partial class LoginWindow : Window
     {
-        public LoginWindow()
+        private readonly TaskManagerClient _taskManagerClient;
+        public LoginWindow(TaskManagerClient taskManagerClient)
         {
             InitializeComponent();
+            _taskManagerClient = taskManagerClient;
+            Task.Run(() => _taskManagerClient.ConnectAsync("127.0.0.1", 5000));
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)

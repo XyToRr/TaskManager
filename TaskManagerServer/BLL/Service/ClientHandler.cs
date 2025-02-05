@@ -60,15 +60,15 @@ namespace BLL.Service
             }
         }
 
-        private void HandleMessage(Message message)
+        private async void HandleMessage(Message message)
         {
             switch (message.MessageType)
             {
                 case MessageType.RegisterRequest:
-                    HandleRegisterRequest(message.Content);
+                    await HandleRegisterRequest(message.Content);
                     break;
                 case MessageType.LoginRequest:
-                    HandleLoginRequest(message.Content);
+                    await HandleLoginRequest(message.Content);
                     break;
                 case MessageType.RoleChange:
                     break;
@@ -96,7 +96,7 @@ namespace BLL.Service
                 await SendMessage(new Message { MessageType = MessageType.LoginDecline });
 
 
-            user = FindUser(userInfo.Login, userInfo.PasswordHash);
+            user = FindUser(userInfo);
             if (user == null)
                 await SendMessage(new Message { MessageType = MessageType.LoginDecline });
 
@@ -130,9 +130,9 @@ namespace BLL.Service
             await SendMessage(new Message { MessageType = MessageType.RegisterAccept });
         }
 
-        private User FindUser(string login, string pass)
+        private User FindUser(User user)
         {
-            return userService.GetByCondition(u => u.Login == login && u.PasswordHash == pass).First();
+            return userService.GetByCondition(u => u.Login == user.Login && u.PasswordHash == user.PasswordHash).First();
         }
 
         public async Task SendMessage(Message message)

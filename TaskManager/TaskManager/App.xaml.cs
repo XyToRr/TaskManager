@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace TaskManager
@@ -17,14 +18,17 @@ namespace TaskManager
             ConfigurationService(serviceProvider);
             ServiceProvider = serviceProvider.BuildServiceProvider();
 
-            var mainWindow = ServiceProvider.GetService<MainWindow>();
+            var mainWindow = ServiceProvider.GetService<LoginWindow>();
             mainWindow.Show();
         }
 
         private void ConfigurationService(ServiceCollection services)
         {
 
-            services.AddTransient<MainWindow>();
+            services.AddTransient<UserService>();
+            services.AddSingleton<TaskManagerClient>();
+
+            services.AddTransient<LoginWindow>();
 
         }
     }

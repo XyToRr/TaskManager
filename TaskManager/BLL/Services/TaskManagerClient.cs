@@ -12,22 +12,26 @@ namespace BLL.Services
     public class TaskManagerClient
     {
         private readonly TcpClient _client;
+        private CancellationTokenSource _cancellationTokenSource;
+        private bool IsConnected;
 
         public event Action<Message> MessageReceived;
         private StreamWriter _streamWriter;
         private StreamReader _streamReader;
         private readonly string _userName;
 
-        public TaskManagerClient(string userName)
+        public TaskManagerClient()
         {
-            userName = _userName;
             _client = new TcpClient();
-
         }
 
         public async Task ConnectAsync(string ipAddress, int port)
         {
+            if (IsConnected) {  return; }
             await _client.ConnectAsync(ipAddress, port);
+            IsConnected = true;
+            _cancellationTokenSource = new CancellationTokenSource();
+
             var stream = _client.GetStream();
             _streamReader = new StreamReader(stream);
             _streamWriter = new StreamWriter(stream) { AutoFlush = true };
@@ -37,14 +41,24 @@ namespace BLL.Services
 
         public async Task ReceiveMessageAsync()
         {
-            while (true)
+            while (!_cancellationTokenSource.Token.IsCancellationRequested)
             {
-                var messageJson = await _streamReader.ReadLineAsync();
-                if (messageJson == null) break;
+                try
+                {
+                    var messageJson = await _streamReader.ReadLineAsync();
+                    if (messageJson == null) break;
 
-                var message = JsonSerializer.Deserialize<Message>(messageJson);
-                MessageReceived?.Invoke(message);
+                    var message = JsonSerializer.Deserialize<Message>(messageJson);
+                    MessageReceived?.Invoke(message);
+                }
+                catch (Exception ex)
+                {
+                    break;
+                }
             }
+
+            IsConnected = false;
+            Console.WriteLine("Disconnected from server.");
         }
 
         public async Task SendMessageAsync(Message message)

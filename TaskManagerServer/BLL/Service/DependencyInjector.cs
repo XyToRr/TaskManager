@@ -1,5 +1,6 @@
 ﻿using DLL.Context;
 using DLL.Repositories;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,13 +25,13 @@ namespace BLL.Service
                 options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=TaskManagerDB;Integrated Security=True;");
             });
 
-            services.AddTransient<ProjectRepository>();
+            services.AddTransient<IRepository<Project>, ProjectRepository>();
             services.AddTransient<ProjectService>();
-            services.AddTransient<TaskCommentRepository>();
+            services.AddTransient<IRepository<TaskComment>, TaskCommentRepository>();
             services.AddTransient<TaskCommentService>();
-            services.AddTransient<TaskRepository>();
+            services.AddTransient<IRepository<TaskModel>, TaskRepository>();
             services.AddTransient<TaskService>();
-            services.AddTransient<UserRepository>();
+            services.AddTransient<IRepository<User>,UserRepository>();
             services.AddTransient<UserService>();
 
             ServiceProvider = services.BuildServiceProvider();

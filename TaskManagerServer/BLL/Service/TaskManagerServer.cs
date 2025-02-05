@@ -23,6 +23,7 @@ namespace BLL.Service
         public async Task StartAsync()
         {
             listener.Start();
+            Console.WriteLine("SERVER STARTED");
             while(true)
             {
                 try

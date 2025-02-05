@@ -31,14 +31,14 @@ namespace TaskManager
 
         private async Task<bool> ConfirmRegister()
         {
-            
+
             if (string.IsNullOrWhiteSpace(LoginTextBox.Text))
             {
                 MessageBox.Show("Логін не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
-            
+
             if (string.IsNullOrWhiteSpace(PasswordTextBox.Text))
             {
                 MessageBox.Show("Пароль не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -51,21 +51,21 @@ namespace TaskManager
                 return false;
             }
 
-            
+
             if (PasswordTextBox.Text != PasswordRepeatTextBox.Text)
             {
                 MessageBox.Show("Паролі не співпадають.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return false ;
+                return false;
             }
 
-            
+
             if (string.IsNullOrWhiteSpace(FirstNameTextBox.Text))
             {
                 MessageBox.Show("Ім'я не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
             }
 
-           
+
             if (string.IsNullOrWhiteSpace(LastNameTextBox.Text))
             {
                 MessageBox.Show("Прізвище не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -76,7 +76,7 @@ namespace TaskManager
             //Метод реєстрації юзера
             return false;
 
-            
+
             return true;
 
         }
@@ -87,10 +87,5 @@ namespace TaskManager
                 MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-    }
-
-
-        
-    
     }
 }
