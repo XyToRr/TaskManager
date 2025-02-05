@@ -12,7 +12,7 @@ namespace Domain.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
-        public virtual List<TaskModel> Tasks { get; set; } = new();
-        public virtual List<UserToProject> Users { get; set; } = new();
+        public List<TaskModel> Tasks { get; set; } = new();
+        public List<UserToProject> Users { get; set; } = new();
     }
 }

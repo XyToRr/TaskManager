@@ -16,12 +16,12 @@ namespace Domain.Models
         public Priority Priority { get; set; }
         public Status Status { get; set; }
         public int RepositoryId { get; set; }
-        public virtual Project Repository { get; set; }
+        public Project Repository { get; set; }
         public int CreatedUserId { get; set; }
-        public virtual User CreatedUser { get; set; }
+        public User CreatedUser { get; set; }
         public int? AssignedUserId { get; set; }
-        public virtual User AssignedUser { get; set; }
-        public virtual List<TaskComment> Comments { get; set; } = new();
+        public User AssignedUser { get; set; }
+        public List<TaskComment> Comments { get; set; } = new();
     }
 
     public enum Status
