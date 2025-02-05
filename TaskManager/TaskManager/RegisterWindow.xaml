@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="450" Width="800">
+        Title="RegisterWindow" Height="360" Width="400">
     <Grid>
-        
+        <StackPanel Orientation="Vertical" Margin="30">
+            <Label Content="Login" FontSize="15"/>
+            <TextBox x:Name="LoginTextBox" Margin="5 0"/>
+            <Label Content="Password" FontSize="15"/>
+            <TextBox x:Name="PasswordTextBox" Margin="5 0"/>
+            <Label Content="Password repeat" FontSize="15"/>
+            <TextBox x:Name="PasswordRepeatTextBox" Margin="5 0"/>
+            <Label Content="First name" FontSize="15"/>
+            <TextBox x:Name="FirstNameTextBox" Margin="5 0"/>
+            <Label Content="Last name" FontSize="15"/>
+            <TextBox x:Name="LastNameTextBox" Margin="5 0"/>
+            <Button Content="Register" Margin="20"/>
+        </StackPanel>
     </Grid>
 </Window>
