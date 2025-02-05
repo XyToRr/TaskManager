@@ -93,19 +93,19 @@ namespace BLL.Service
         {
             var userInfo = JsonSerializer.Deserialize<User>(requestData);
             if (userInfo == null)
-                await SendMessage(new Message { MessageType = MessageType.Decline });
+                await SendMessage(new Message { MessageType = MessageType.LoginDecline });
 
 
             user = FindUser(userInfo.Login, userInfo.PasswordHash);
             if (user == null)
-                await SendMessage(new Message { MessageType = MessageType.Decline });
+                await SendMessage(new Message { MessageType = MessageType.LoginDecline });
 
             clientToken = GenerateToken();
             await SendMessage(new Message
             {
                 Token = clientToken,
                 Content = JsonSerializer.Serialize(user),
-                MessageType = MessageType.Accept
+                MessageType = MessageType.LoginAccept
             });
         }
 
@@ -119,15 +119,15 @@ namespace BLL.Service
             var userInfo = JsonSerializer.Deserialize<User>(requestData);
             if (userInfo == null)
             {
-                await SendMessage(new Message { MessageType = MessageType.Decline });
+                await SendMessage(new Message { MessageType = MessageType.RegisterDecline });
             }
             if (FindUser(userInfo) != null)
             {
-                await SendMessage(new Message { MessageType = MessageType.Decline });
+                await SendMessage(new Message { MessageType = MessageType.RegisterDecline });
             }
 
             await userService.AddAsync(userInfo);
-            await SendMessage(new Message { MessageType = MessageType.Accept });
+            await SendMessage(new Message { MessageType = MessageType.RegisterAccept });
         }
 
         private User FindUser(string login, string pass)
