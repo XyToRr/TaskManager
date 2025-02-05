@@ -67,7 +67,7 @@ namespace DLL.Context
                 entity.Property(u => u.CreatedAt).IsRequired();
             });
 
-            modelBuilder.Entity<UserToRepository>(entity =>
+            modelBuilder.Entity<UserToProject>(entity =>
             {
 
                 entity.Property(ur => ur.Role).IsRequired().HasConversion<string>();
