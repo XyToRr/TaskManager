@@ -167,33 +167,21 @@ namespace BLL.Service
         {
             if (user == null)
             {
-                await SendMessage(new Message
-                {
-                    Content = "",
-                    MessageType = MessageType.ProjectListUpdate
-                });
+                await SendProjectListUpdate();
                 return;
             }
-                
+
             var project = JsonSerializer.Deserialize<Project>(newProjectJson);
             if (project == null)
             {
-                await SendMessage(new Message
-                {
-                    Content = "",
-                    MessageType = MessageType.ProjectListUpdate
-                });
+                await SendProjectListUpdate();
                 return;
             }
 
             try
             {
                 await projectService.AddUser(user.Id, Role.Owner, project.Id);
-                await SendMessage(new Message
-                {
-                    Content = JsonSerializer.Serialize(projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList()),
-                    MessageType = MessageType.ProjectListUpdate
-                });
+                await SendProjectListUpdate();
 
             }
             catch (Exception ex)
@@ -201,6 +189,15 @@ namespace BLL.Service
                 Console.WriteLine(ex.Message);
             }
                 
+        }
+
+        private async Task SendProjectListUpdate()
+        {
+            await SendMessage(new Message
+            {
+                Content = JsonSerializer.Serialize(projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList()),
+                MessageType = MessageType.ProjectListUpdate
+            });
         }
 
         private bool IsTokenCorrect(string token) 
