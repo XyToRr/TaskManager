@@ -22,6 +22,7 @@ namespace BLL.Service
         private StreamWriter writer;
 
         private UserService userService;
+        private ProjectService projectService;
 
         private string clientToken;
         private User user;
@@ -35,6 +36,7 @@ namespace BLL.Service
             writer = new StreamWriter(stream) { AutoFlush = true };
 
             userService = DependencyInjector.ServiceProvider.GetService<UserService>();
+            projectService = DependencyInjector.ServiceProvider.GetService<ProjectService>();
         }
 
         public async Task HandleClientAsync()
@@ -70,9 +72,8 @@ namespace BLL.Service
                 case MessageType.LoginRequest:
                     await HandleLoginRequest(message.Content);
                     break;
-                case MessageType.RoleChange:
-                    break;
                 case MessageType.ProjectCreationRequest:
+                    await CreateProjectAsync(message.Content);
                     break;
                 case MessageType.TaskCreationRequest:
                     break;
@@ -85,6 +86,8 @@ namespace BLL.Service
                 case MessageType.TaskStateUpdate:
                     break;
                 case MessageType.AddUserToProject:
+                    break;
+                default:
                     break;
             }
         }
@@ -139,6 +142,46 @@ namespace BLL.Service
         {
             var messageJson = JsonSerializer.Serialize(message);
             await writer.WriteLineAsync(messageJson);
+        }
+
+        private async Task CreateProjectAsync(string newProjectJson)
+        {
+            if (user == null)
+            {
+                await SendMessage(new Message
+                {
+                    Content = "",
+                    MessageType = MessageType.ProjectListUpdate
+                });
+                return;
+            }
+                
+            var project = JsonSerializer.Deserialize<Project>(newProjectJson);
+            if (project == null)
+            {
+                await SendMessage(new Message
+                {
+                    Content = "",
+                    MessageType = MessageType.ProjectListUpdate
+                });
+                return;
+            }
+
+            try
+            {
+                await projectService.AddUser(user.Id, Role.Owner, project.Id);
+                await SendMessage(new Message
+                {
+                    Content = JsonSerializer.Serialize(projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList()),
+                    MessageType = MessageType.ProjectListUpdate
+                });
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+                
         }
     }
 }
