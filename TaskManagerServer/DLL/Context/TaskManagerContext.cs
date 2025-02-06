@@ -62,6 +62,12 @@ namespace DLL.Context
                 .HasOne(c => c.Task)
                 .WithMany(t => t.Comments)
                 .HasForeignKey(c => c.TaskId);
+
+            modelBuilder.Entity<TaskComment>()
+              .HasOne(c => c.User)
+              .WithMany(u => u.WrittenComments)
+              .HasForeignKey(c => c.UserId);
+
         }
 
         private void SetUpUserRepositoryManyToMany(ModelBuilder modelBuilder)

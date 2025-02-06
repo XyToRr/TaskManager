@@ -17,5 +17,6 @@ namespace Domain.Models
         public List<UserToProject> Repositories { get; set; } = new();
         public List<TaskModel> CreatedTasks { get; set; } = new();
         public List<TaskModel> AssignedTasks { get; set; } = new();
+        public List<TaskComment> WrittenComments { get; set; } = new();
     }
 }
