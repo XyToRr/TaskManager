@@ -21,6 +21,7 @@ namespace TaskManager
     public partial class LoginWindow : Window
     {
         private readonly TaskManagerClient _taskManagerClient;
+        private Action<bool> serverMessage;
         
 
         public LoginWindow(TaskManagerClient taskManagerClient)
