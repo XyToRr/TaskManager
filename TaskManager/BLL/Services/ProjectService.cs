@@ -11,7 +11,7 @@ namespace BLL.Services
     public class ProjectService
     {
         private readonly TaskManagerClient _taskManagerClient;
-        public Action<bool> OnCreate;
+        public Action<List<Project>> OnCreate;
         public Action<bool> OnUserAdd;
 
         public ProjectService(TaskManagerClient taskManagerClient)
@@ -22,14 +22,10 @@ namespace BLL.Services
 
         private void OnMessageReceived(Message message)
         {
-            if (message.MessageType == MessageType.ProjectCreationRequest)
-            {
-                var json = JsonSerializer.Deserialize<bool>(message.Content);
-                OnCreate?.Invoke(json);
-            }
             if (message.MessageType == MessageType.ProjectListUpdate)
             {
-
+                var json = JsonSerializer.Deserialize<List<Project>>(message.Content);
+                OnCreate?.Invoke(json);
             }
             if (message.MessageType == MessageType.AddUserToProject)
             {
