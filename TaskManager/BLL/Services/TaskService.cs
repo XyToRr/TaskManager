@@ -8,13 +8,12 @@ using Domain.Models;
 
 namespace BLL.Services
 {
-    public class ProjectService
+    public class TaskService
     {
         private readonly TaskManagerClient _taskManagerClient;
-        public Action<List<Project>> OnCreate;
-        public Action<bool> OnUserAdd;
+        public Action<bool> isCreated;
 
-        public ProjectService(TaskManagerClient taskManagerClient)
+        public TaskService(TaskManagerClient taskManagerClient)
         {
             _taskManagerClient = taskManagerClient;
             _taskManagerClient.MessageReceived += OnMessageReceived;
@@ -22,32 +21,24 @@ namespace BLL.Services
 
         private void OnMessageReceived(Message message)
         {
-            if (message.MessageType == MessageType.ProjectListUpdate)
-            {
-                var json = JsonSerializer.Deserialize<List<Project>>(message.Content);
-                OnCreate?.Invoke(json);
-            }
-            if (message.MessageType == MessageType.AddUserToProject)
+            if (message.MessageType == MessageType.TaskCreationRequest)
             {
                 var json = JsonSerializer.Deserialize<bool>(message.Content);
-                OnUserAdd?.Invoke(json);
+                isCreated?.Invoke(json);
             }
         }
 
-        public async void ProjectCreate(Project project)
+        public async void TaskCreate(TaskModel task)
         {
-            var json = JsonSerializer.Serialize(project);
+            var json = JsonSerializer.Serialize(task);
             var Message = new Message()
             {
-                MessageType = MessageType.ProjectCreationRequest,
+                MessageType = MessageType.TaskCreationRequest,
                 Content = json
             };
             await _taskManagerClient.SendMessageAsync(Message);
         }
 
-        public async void AddUserToProject()
-        {
-
-        }
+        
     }
 }
