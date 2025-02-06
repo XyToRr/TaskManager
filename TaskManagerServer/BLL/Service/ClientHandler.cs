@@ -93,12 +93,18 @@ namespace BLL.Service
         {
             var userInfo = JsonSerializer.Deserialize<User>(requestData);
             if (userInfo == null)
+            {
                 await SendMessage(new Message { MessageType = MessageType.LoginDecline });
+                return;
+            }
 
 
             user = FindUser(userInfo);
             if (user == null)
+            {
                 await SendMessage(new Message { MessageType = MessageType.LoginDecline });
+                return;
+            }
 
             clientToken = GenerateToken();
             await SendMessage(new Message
@@ -132,7 +138,7 @@ namespace BLL.Service
 
         private User FindUser(User user)
         {
-            return userService.GetByCondition(u => u.Login == user.Login && u.PasswordHash == user.PasswordHash).First();
+            return userService.GetByCondition(u => u.Login == user.Login && u.PasswordHash == user.PasswordHash).FirstOrDefault();
         }
 
         public async Task SendMessage(Message message)

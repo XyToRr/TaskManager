@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLL.Services;
+using Domain.Models;
 
 namespace TaskManager
 {
@@ -19,9 +22,24 @@ namespace TaskManager
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        public RegisterWindow()
+        private readonly TaskManagerClient _taskManagerClient;
+        private readonly UserService _userService;
+        public RegisterWindow(TaskManagerClient taskManagerClient, UserService userService)
         {
             InitializeComponent();
+            _taskManagerClient = taskManagerClient;
+            _userService = userService;
+
+            _userService.RegisterRequestReceived += OnMessageReceived;
+        }
+
+        private void OnMessageReceived(bool isRegiter)
+        {
+            if (isRegiter)
+            {
+                MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }
         }
 
         private async void ClearForm()
@@ -88,10 +106,14 @@ namespace TaskManager
         {
             if (await ValidateRegister())
             {
-                //Метод реєстрації юзера
-
-
-                MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+                var user = new User
+                {
+                    FirstName = FirstNameTextBox.Text,
+                    LastName = LastNameTextBox.Text,
+                    Login = LoginTextBox.Text,
+                    PasswordHash = PasswordTextBox.Text,
+                };
+                await _userService.RegisterRequest(user);
             }
             else
             {

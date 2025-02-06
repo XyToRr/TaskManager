@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BLL.Services;
+using Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -21,14 +22,33 @@ namespace TaskManager
     public partial class LoginWindow : Window
     {
         private readonly TaskManagerClient _taskManagerClient;
+        private readonly UserService _userService;
+        private Action<bool> serverMessage;
         
 
-        public LoginWindow(TaskManagerClient taskManagerClient)
+        public LoginWindow(TaskManagerClient taskManagerClient, UserService userService)
         {
             InitializeComponent();
+            _userService = userService;
             _taskManagerClient = taskManagerClient;
+
+            _userService.LoginRequestReceived += OnMessageReceive;
             
             Task.Run(() => _taskManagerClient.ConnectAsync("127.0.0.1", 5000));
+        }
+
+        private async void OnMessageReceive(bool isReceived)
+        {
+            if (isReceived == true)
+            {
+                MessageBox.Show("Успішний вхід!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                await Dispatcher.BeginInvoke(() => this.Close());
+            }
+            else
+            {
+                MessageBox.Show("Неправельний логін або пароль", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
@@ -49,6 +69,7 @@ namespace TaskManager
         {
             if (string.IsNullOrWhiteSpace(LoginTextBox.Text) || string.IsNullOrWhiteSpace(PasswordTextBox.Text))
             {
+
                 MessageBox.Show("Логін або пароль не може бути порожнім.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
                 ClearForm();
                 return false;
@@ -63,14 +84,12 @@ namespace TaskManager
         {
             if(await ValidateLogin())
             {
-
-                //логін користувача
-
-                MessageBox.Show("Успішний вхід!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                //відкриття головного вікна
-
-                this.Close();
+                var user = new User
+                {
+                    Login = LoginTextBox.Text,
+                    PasswordHash = PasswordTextBox.Text,
+                };
+                await _userService.LoginRequest(user);
             }
         }
 
