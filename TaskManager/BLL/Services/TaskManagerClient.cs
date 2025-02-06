@@ -63,6 +63,9 @@ namespace BLL.Services
 
         public async Task SendMessageAsync(Message message)
         {
+            
+
+
             var json = JsonSerializer.Serialize(message);
             await _streamWriter.WriteLineAsync(json);
         }

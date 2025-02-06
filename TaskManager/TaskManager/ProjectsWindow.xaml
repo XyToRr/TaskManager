@@ -1,0 +1,73 @@
+﻿<Window x:Class="TaskManager.ProjectsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskManager"
+        mc:Ignorable="d"
+        Title="ProjectsWindow" Height="1080" Width="1920"
+        Background="{StaticResource BackgroundBrush}"
+        >
+
+    <Window.Resources>
+        <!-- Список тестових проектів -->
+        <x:Array x:Key="TestProjects" Type="{x:Type local:Project}">
+            <local:Project Name="Test Project 1" Role="Owner" Description="Sample project description" TaskCount="3" CreatedDate="01.02.2025"/>
+            <local:Project Name="Test Project 2" Role="Member" Description="Another project example" TaskCount="5" CreatedDate="15.03.2025"/>
+            <local:Project Name="Test Project 3" Role="Admin" Description="This is just a test project" TaskCount="7" CreatedDate="20.04.2025"/>
+        </x:Array>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+
+
+        <ScrollViewer  Height="750" Grid.Row="0">
+            <ListView Background="{StaticResource BackgroundBrush}" x:Name="ProjectsListView" ItemsSource="{StaticResource TestProjects}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="{StaticResource ForegroundBrush}" Padding="10" Margin="25">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                
+                                <Image Source="https://icon-icons.com/icons2/3001/PNG/512/default_filetype_file_empty_document_icon_187718.png" Width="50" Height="50" Grid.Column="0"/>
+
+                                
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock FontWeight="Bold" FontSize="14" Text="NAME: " />
+                                    <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Name}" />
+                                    <TextBlock Text="Your Role: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Role}" />
+                                    <TextBlock Text="Description: " FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
+                                </StackPanel>
+
+                                
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="Task" FontSize="14"/>
+                                    <TextBlock Text="{Binding TaskCount}" FontSize="22" FontWeight="Bold"/>
+                                    <TextBlock Text="Created Date:"/>
+                                    <TextBlock Text="{Binding CreatedDate}" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+           
+        </ScrollViewer>
+
+        <Button Grid.Row="2"  Content="Додати проект" Height="70" Width="300" FontSize="36" 
+         Click="AddProject_Click" />
+    </Grid>
+</Window>
