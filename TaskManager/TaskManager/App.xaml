@@ -24,6 +24,12 @@
             <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
 
 
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+            </Style>
+            
+            
+
             <!--Window Style-->
             <Style TargetType="Window">
                 <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>

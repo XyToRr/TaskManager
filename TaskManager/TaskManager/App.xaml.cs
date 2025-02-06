@@ -20,6 +20,13 @@ namespace TaskManager
 
             var mainWindow = ServiceProvider.GetService<LoginWindow>();
             mainWindow.Show();
+
+            //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
+            //mainWindow.Show();
+
+
+            //var mainWindow = ServiceProvider.GetService<AddProjectWindow>();
+            //mainWindow.Show();
         }
 
         private void ConfigurationService(ServiceCollection services)
@@ -30,6 +37,8 @@ namespace TaskManager
 
             services.AddTransient<LoginWindow>();
             services.AddTransient<RegisterWindow>();
+            services.AddTransient<ProjectsWindow>();
+            services.AddTransient<AddProjectWindow>();
 
         }
     }
