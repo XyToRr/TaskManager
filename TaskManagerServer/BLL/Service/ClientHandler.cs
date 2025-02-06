@@ -73,7 +73,8 @@ namespace BLL.Service
                     await HandleLoginRequest(message.Content);
                     break;
                 case MessageType.ProjectCreationRequest:
-                    await CreateProjectAsync(message.Content);
+                    if(IsTokenCorrect(message.Token))
+                        await CreateProjectAsync(message.Content);
                     break;
                 case MessageType.TaskCreationRequest:
                     break;
@@ -182,6 +183,11 @@ namespace BLL.Service
                 Console.WriteLine(ex.Message);
             }
                 
+        }
+
+        private bool IsTokenCorrect(string token) 
+        {
+            return this.clientToken == token;
         }
     }
 }
