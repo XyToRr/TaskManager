@@ -5,17 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
-        Title="AddProjectWindow" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="Додавання проекту" Height="450" Width="800"
+        Background="{StaticResource BackgroundBrush} "
+        >
     <Grid>
 
-        <StackPanel>
-            <TextBlock Text="Add Project" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-            <TextBlock Text="Name" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+        <StackPanel Margin="20">
+            <TextBlock Text="Додавання проекту" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+            <TextBlock Text="Ім'я" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
 
             <TextBox x:Name="NameBox"></TextBox>
-            <TextBlock Text="Description" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+            <TextBlock Text="Опис" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
             <TextBox x:Name="DescriptionBox"></TextBox>
-            <Button Margin="10" Content="Додати проект" Click="AddProjectButton_Click"></Button>
+            <Button Margin="10,30" Width="200" FontSize="18" Content="Додати проект" Click="AddProjectButton_Click"></Button>
         </StackPanel>
         
         

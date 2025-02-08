@@ -6,16 +6,16 @@
       
         xmlns:local="clr-namespace:TaskManager"
         
-        Title="Login" Height="300" Width="450"  
+        Title="Логін" Height="300" Width="450"  
         Background="{StaticResource BackgroundBrush}"
         >
         
        
         <Grid>
         <StackPanel Orientation="Vertical" Margin="30">
-            <Label Content="Login"/>
+            <Label Content="Логін"/>
             <TextBox x:Name="LoginTextBox" />
-            <Label Content="Password" />
+            <Label Content="Пароль" />
             <TextBox x:Name="PasswordTextBox" />
 
 

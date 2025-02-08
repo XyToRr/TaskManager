@@ -12,17 +12,23 @@ namespace TaskManager
     public partial class App : Application
     {
         public static IServiceProvider ServiceProvider { get; private set; }
+
+       
+
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             var serviceProvider = new ServiceCollection();
             ConfigurationService(serviceProvider);
             ServiceProvider = serviceProvider.BuildServiceProvider();
 
-            var mainWindow = ServiceProvider.GetService<LoginWindow>();
-            mainWindow.Show();
 
-            //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
+            //var client = ServiceProvider.GetService<TaskManagerClient>();
+
+            //var mainWindow = ServiceProvider.GetService<LoginWindow>();
             //mainWindow.Show();
+
+            var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
+            mainWindow.Show();
 
 
             //var mainWindow = ServiceProvider.GetService<AddProjectWindow>();
