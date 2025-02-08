@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Models;
+using TaskManager.Configuration.UserAuthentificationHelper;
 
 namespace BLL.Services
 {
@@ -34,7 +35,8 @@ namespace BLL.Services
             var Message = new Message()
             {
                 MessageType = MessageType.TaskCreationRequest,
-                Content = json
+                Content = json,
+                Token = UserAuthentificationHelper.Token
             };
             await _taskManagerClient.SendMessageAsync(Message);
         }
