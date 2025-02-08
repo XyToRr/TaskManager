@@ -21,20 +21,18 @@ namespace TaskManager
     /// </summary>
     public partial class LoginWindow : Window
     {
-        private readonly TaskManagerClient _taskManagerClient;
         private readonly UserService _userService;
         private Action<bool> serverMessage;
         
 
-        public LoginWindow(TaskManagerClient taskManagerClient, UserService userService)
+        public LoginWindow(UserService userService)
         {
             InitializeComponent();
+            
             _userService = userService;
-            _taskManagerClient = taskManagerClient;
-
             _userService.LoginRequestReceived += OnMessageReceive;
             
-            Task.Run(() => _taskManagerClient.ConnectAsync("127.0.0.1", 5000));
+            //Task.Run(() => ConnectionService.Instance.Client.ConnectAsync("127.0.0.1", 5000));
         }
 
         private async void OnMessageReceive(bool isReceived)
@@ -44,6 +42,7 @@ namespace TaskManager
                 MessageBox.Show("Успішний вхід!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 await Dispatcher.BeginInvoke(() => this.Close());
+
             }
             else
             {

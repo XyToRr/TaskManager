@@ -33,7 +33,8 @@ namespace TaskManager
         {
 
             services.AddTransient<UserService>();
-            services.AddSingleton<TaskManagerClient>();
+            services.AddSingleton<ConnectionService>();
+            //services.AddSingleton<TaskManagerClient>();
 
             services.AddTransient<LoginWindow>();
             services.AddTransient<RegisterWindow>();

@@ -23,12 +23,12 @@ namespace TaskManager
     /// </summary>
     public partial class AddProjectWindow : Window
     {
-        private readonly TaskManagerClient _taskManagerClient;
+       // private readonly TaskManagerClient _taskManagerClient;
         private readonly UserService _userService;
 
-        public AddProjectWindow(TaskManagerClient taskManagerClient, UserService userService)
+        public AddProjectWindow(UserService userService)
         {
-            _taskManagerClient = taskManagerClient;
+           // _taskManagerClient = taskManagerClient;
             _userService = userService;
             InitializeComponent();
         }
@@ -44,7 +44,7 @@ namespace TaskManager
             };
 
 
-            _ = _taskManagerClient.SendMessageAsync(new Message()
+            _ = ConnectionService.Instance.Client.SendMessageAsync(new Message()
             {
                 Content = JsonSerializer.Serialize(proj),
                 MessageType = MessageType.ProjectCreationRequest,

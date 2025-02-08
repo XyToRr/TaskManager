@@ -11,14 +11,14 @@ namespace BLL.Services
 {
     public class ProjectService
     {
-        private readonly TaskManagerClient _taskManagerClient;
+        //private readonly TaskManagerClient _taskManagerClient;
         public Action<List<Project>> OnCreate;
         public Action<bool> OnUserAdd;
 
-        public ProjectService(TaskManagerClient taskManagerClient)
+        public ProjectService()
         {
-            _taskManagerClient = taskManagerClient;
-            _taskManagerClient.MessageReceived += OnMessageReceived;
+            //_taskManagerClient = ConnectionService.Instance.Client;
+            ConnectionService.Instance.Client.MessageReceived += OnMessageReceived;
         }
 
         private void OnMessageReceived(Message message)
@@ -44,7 +44,7 @@ namespace BLL.Services
                 Content = json,
                 Token = UserAuthentificationHelper.Token
             };
-            await _taskManagerClient.SendMessageAsync(Message);
+            await ConnectionService.Instance.Client.SendMessageAsync(Message);
         }
 
         public async void AddUserToProject()

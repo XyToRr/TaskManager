@@ -59,6 +59,7 @@ namespace BLL.Service
                 {
                     Console.WriteLine(ex.ToString());
                     client.Close();
+                    break;
                 }
             }
         }
