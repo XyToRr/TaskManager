@@ -18,6 +18,7 @@ namespace Domain.Models
         LoginRequest,
         ProjectListUpdate,
         ProjectCreationRequest,
+        ProjectListRequest,
         TaskCreationRequest,
         FindUser,
         TaskAssignment,
