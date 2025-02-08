@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -25,7 +26,6 @@ namespace BLL.Service
         private ProjectService projectService;
 
         private string clientToken;
-        private User user;
         public ClientHandler(TcpClient client, TaskManagerServer server) 
         {
             this.client = client;
@@ -59,6 +59,7 @@ namespace BLL.Service
                 {
                     Console.WriteLine(ex.ToString());
                     client.Close();
+                    server.handlers.Remove(clientToken, out var user);
                     break;
                 }
             }
@@ -76,7 +77,11 @@ namespace BLL.Service
                     break;
                 case MessageType.ProjectCreationRequest:
                     if(IsTokenCorrect(message.Token))
-                        await CreateProjectAsync(message.Content);
+                        await CreateProjectAsync(message);
+                    break;
+                case MessageType.ProjectListRequest:
+                    if (IsTokenCorrect(message.Token))
+                        await SendProjectListUpdate(message.Token);
                     break;
                 case MessageType.TaskCreationRequest:
                     break;
@@ -120,7 +125,7 @@ namespace BLL.Service
             }
 
 
-            user = userService.FindUserByLoginAndPassword(userInfo);
+            var user = userService.FindUserByLoginAndPassword(userInfo);
             if (user == null)
             {
                 await SendMessage(new Message { MessageType = MessageType.LoginDecline });
@@ -128,6 +133,7 @@ namespace BLL.Service
             }
 
             clientToken = GenerateToken();
+            server.handlers.TryAdd(clientToken, user.Id);
             await SendMessage(new Message
             {
                 Token = clientToken,
@@ -165,15 +171,16 @@ namespace BLL.Service
             await writer.WriteLineAsync(messageJson);
         }
 
-        private async Task CreateProjectAsync(string newProjectJson)
+        private async Task CreateProjectAsync(Message message)
         {
+            var user = await userService.GetByCondition(u => u.Id == server.handlers[message.Token]).FirstAsync();
             if (user == null)
             {
                 await SendProjectListUpdate();
                 return;
             }
 
-            var project = JsonSerializer.Deserialize<Project>(newProjectJson);
+            var project = JsonSerializer.Deserialize<Project>(message.Content);
             if (project == null)
             {
                 await SendProjectListUpdate();
@@ -183,7 +190,7 @@ namespace BLL.Service
             try
             {
                 await projectService.AddUser(user.Id, Role.Owner, project.Id);
-                await SendProjectListUpdate();
+                await SendProjectListUpdate(message.Token);
 
             }
             catch (Exception ex)
@@ -193,11 +200,22 @@ namespace BLL.Service
                 
         }
 
-        private async Task SendProjectListUpdate()
+        private async Task SendProjectListUpdate(string token = null)
         {
+            if (string.IsNullOrEmpty(token))
+                await SendMessage(new Message
+                {
+                    Content = string.Empty,
+                    MessageType = MessageType.ProjectListUpdate
+                });
+
+            var user = await userService.GetByCondition(u => u.Id == server.handlers[token]).FirstAsync();
+            var projects = projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList();
+
+
             await SendMessage(new Message
             {
-                Content = JsonSerializer.Serialize(projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList()),
+                Content = JsonSerializer.Serialize(projects),
                 MessageType = MessageType.ProjectListUpdate
             });
         }
