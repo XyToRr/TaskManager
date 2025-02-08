@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Models;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace BLL.Service
     {
         private readonly TcpListener listener;
         
-        private ConcurrentDictionary<string, int> handlers;
+        public ConcurrentDictionary<string, int> handlers;
 
         public TaskManagerServer(IPAddress address, int port)
         {
