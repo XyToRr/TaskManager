@@ -44,7 +44,7 @@ namespace TaskManager
             };
 
 
-            _ = ConnectionService.Instance.Client.SendMessageAsync(new Message()
+            _ = App.Client.SendMessageAsync(new Message()
             {
                 Content = JsonSerializer.Serialize(proj),
                 MessageType = MessageType.ProjectCreationRequest,

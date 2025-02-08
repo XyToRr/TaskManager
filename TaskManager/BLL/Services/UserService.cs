@@ -17,9 +17,12 @@ namespace BLL.Services
         public Action<bool> RegisterRequestReceived;
         public Action<bool> LoginRequestReceived;
 
-        public UserService() 
+        private TaskManagerClient _taskManagerClient;
+
+        public UserService(TaskManagerClient client) 
         {
-            ConnectionService.Instance.Client.MessageReceived += OnMessageReceived;
+            _taskManagerClient = client;
+            _taskManagerClient.MessageReceived += OnMessageReceived;
         }
 
         private void OnMessageReceived(Message message)
@@ -52,7 +55,7 @@ namespace BLL.Services
                 MessageType = MessageType.RegisterRequest,
                 Content = json
             };
-            await ConnectionService.Instance.Client.SendMessageAsync(Message);
+            await _taskManagerClient.SendMessageAsync(Message);
             
         }
 
@@ -64,7 +67,7 @@ namespace BLL.Services
                 MessageType = MessageType.LoginRequest,
                 Content = json
             };
-            await ConnectionService.Instance.Client.SendMessageAsync(Message);
+            await _taskManagerClient.SendMessageAsync(Message);
         }
     }
 }

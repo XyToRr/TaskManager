@@ -32,7 +32,7 @@ namespace TaskManager
             _userService = userService;
             _userService.LoginRequestReceived += OnMessageReceive;
             
-            //Task.Run(() => ConnectionService.Instance.Client.ConnectAsync("127.0.0.1", 5000));
+            //Task.Run(async() => await App.Client.ConnectAsync("127.0.0.1", 5000));
         }
 
         private async void OnMessageReceive(bool isReceived)
@@ -42,6 +42,8 @@ namespace TaskManager
                 MessageBox.Show("Успішний вхід!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 await Dispatcher.BeginInvoke(() => this.Close());
+                var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
+                projWindow.Show();
 
             }
             else
