@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="Реєстрація" Height="500" Width="400"
         Background="{StaticResource BackgroundBrush}">
-        Title="RegisterWindow" Height="500" Width="400"
-        >
+    
     <Grid>
         <StackPanel Orientation="Vertical" Margin="30">
             <Label Content="Логін" />

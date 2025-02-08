@@ -41,9 +41,10 @@ namespace TaskManager
             {
                 MessageBox.Show("Успішний вхід!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                await Dispatcher.BeginInvoke(() => this.Close());
+
                 var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
                 projWindow.Show();
+                await Dispatcher.BeginInvoke(() => this.Close());
 
             }
             else

@@ -13,8 +13,6 @@ namespace TaskManager
     {
         public static IServiceProvider ServiceProvider { get; private set; }
 
-
-        private void Application_Startup(object sender, StartupEventArgs e)
         public static TaskManagerClient Client { get; private set; }
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
@@ -32,9 +30,6 @@ namespace TaskManager
 
             //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
             //mainWindow.Show();
-
-            var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
-            mainWindow.Show();
 
 
             //var mainWindow = ServiceProvider.GetService<AddProjectWindow>();

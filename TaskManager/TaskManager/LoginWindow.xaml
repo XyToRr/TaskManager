@@ -6,7 +6,6 @@
       
         xmlns:local="clr-namespace:TaskManager"
         
-        Title="Логін" Height="300" Width="450"  
         Background="{StaticResource BackgroundBrush}"
         Title="Login" Height="300" Width="450"  
  
