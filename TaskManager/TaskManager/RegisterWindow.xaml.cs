@@ -38,7 +38,7 @@ namespace TaskManager
             if (isRegiter)
             {
                 MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
+                //this.Close();
             }
         }
 

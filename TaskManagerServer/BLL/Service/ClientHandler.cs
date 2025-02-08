@@ -58,6 +58,7 @@ namespace BLL.Service
                 catch (Exception ex) 
                 {
                     Console.WriteLine(ex.ToString());
+                    client.Close();
                 }
             }
         }
@@ -79,7 +80,7 @@ namespace BLL.Service
                 case MessageType.TaskCreationRequest:
                     break;
                 case MessageType.FindUser:
-                    if (IsTokenCorrect(message.Token)
+                    if (IsTokenCorrect(message.Token))
                        await SendUsersWithMatchingLogins(message.Content);
                     break;
                 case MessageType.TaskAssignment:
@@ -89,8 +90,8 @@ namespace BLL.Service
                 case MessageType.TaskStateUpdate:
                     break;
                 case MessageType.AddUserToProject:
-                    if(IsTokenCorrect(message.Token))
-                    
+                    if (IsTokenCorrect(message.Token))
+                        break;
                     break;
                 default:
                     break;
@@ -103,7 +104,7 @@ namespace BLL.Service
             await SendMessage(new Message
             {
                 MessageType = MessageType.FindUser,
-                Content = JsonSerializer.Serialize(users)
+                Content = JsonSerializer.Serialize(users),
                 Token = clientToken
             });
         }
