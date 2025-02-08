@@ -16,7 +16,7 @@ namespace Domain.Models
         LoginDecline,
         RegisterRequest,
         LoginRequest,
-        RoleChange,
+        ProjectListUpdate,
         ProjectCreationRequest,
         TaskCreationRequest,
         FindUser,

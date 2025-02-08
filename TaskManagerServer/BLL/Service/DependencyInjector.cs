@@ -33,8 +33,6 @@ namespace BLL.Service
             services.AddTransient<TaskService>();
             services.AddTransient<IRepository<User>,UserRepository>();
             services.AddTransient<UserService>();
-            services.AddTransient<IRepository<UserToProject>, UserToProjectRepository>();
-            services.AddTransient<>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
