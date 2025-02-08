@@ -58,6 +58,7 @@ namespace BLL.Service
                 catch (Exception ex) 
                 {
                     Console.WriteLine(ex.ToString());
+                    client.Close();
                 }
             }
         }
@@ -79,6 +80,8 @@ namespace BLL.Service
                 case MessageType.TaskCreationRequest:
                     break;
                 case MessageType.FindUser:
+                    if (IsTokenCorrect(message.Token))
+                       await SendUsersWithMatchingLogins(message.Content);
                     break;
                 case MessageType.TaskAssignment:
                     break;
@@ -87,10 +90,23 @@ namespace BLL.Service
                 case MessageType.TaskStateUpdate:
                     break;
                 case MessageType.AddUserToProject:
+                    if (IsTokenCorrect(message.Token))
+                        break;
                     break;
                 default:
                     break;
             }
+        }
+
+        private async Task SendUsersWithMatchingLogins(string login)
+        {
+            var users = userService.FindByMatchingLogin(login);
+            await SendMessage(new Message
+            {
+                MessageType = MessageType.FindUser,
+                Content = JsonSerializer.Serialize(users),
+                Token = clientToken
+            });
         }
 
         private async Task HandleLoginRequest(string requestData)
@@ -103,7 +119,7 @@ namespace BLL.Service
             }
 
 
-            user = FindUser(userInfo);
+            user = userService.FindUserByLoginAndPassword(userInfo);
             if (user == null)
             {
                 await SendMessage(new Message { MessageType = MessageType.LoginDecline });
@@ -131,7 +147,7 @@ namespace BLL.Service
             {
                 await SendMessage(new Message { MessageType = MessageType.RegisterDecline });
             }
-            if (FindUser(userInfo) != null)
+            if (userService.FindUserByLoginAndPassword(userInfo) != null)
             {
                 await SendMessage(new Message { MessageType = MessageType.RegisterDecline });
             }
@@ -140,10 +156,7 @@ namespace BLL.Service
             await SendMessage(new Message { MessageType = MessageType.RegisterAccept });
         }
 
-        private User FindUser(User user)
-        {
-            return userService.GetByCondition(u => u.Login == user.Login && u.PasswordHash == user.PasswordHash).FirstOrDefault();
-        }
+     
 
         public async Task SendMessage(Message message)
         {
@@ -155,33 +168,21 @@ namespace BLL.Service
         {
             if (user == null)
             {
-                await SendMessage(new Message
-                {
-                    Content = "",
-                    MessageType = MessageType.ProjectListUpdate
-                });
+                await SendProjectListUpdate();
                 return;
             }
-                
+
             var project = JsonSerializer.Deserialize<Project>(newProjectJson);
             if (project == null)
             {
-                await SendMessage(new Message
-                {
-                    Content = "",
-                    MessageType = MessageType.ProjectListUpdate
-                });
+                await SendProjectListUpdate();
                 return;
             }
 
             try
             {
                 await projectService.AddUser(user.Id, Role.Owner, project.Id);
-                await SendMessage(new Message
-                {
-                    Content = JsonSerializer.Serialize(projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList()),
-                    MessageType = MessageType.ProjectListUpdate
-                });
+                await SendProjectListUpdate();
 
             }
             catch (Exception ex)
@@ -191,9 +192,64 @@ namespace BLL.Service
                 
         }
 
+        private async Task SendProjectListUpdate()
+        {
+            await SendMessage(new Message
+            {
+                Content = JsonSerializer.Serialize(projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList()),
+                MessageType = MessageType.ProjectListUpdate
+            });
+        }
+
         private bool IsTokenCorrect(string token) 
         {
             return this.clientToken == token;
+        }
+
+        private async Task AddUserToProject(string dataJson)
+        {
+            var userToProject = JsonSerializer.Deserialize<UserToProject>(dataJson);
+            if (userToProject == null)
+            {
+                await SendMessage(new Message()
+                {
+                    Content = JsonSerializer.Serialize(false),
+                    MessageType = MessageType.AddUserToProject,
+                    Token = clientToken
+                });
+                return;
+            }
+
+            if (userService.GetByCondition(u => u.Id == userToProject.UserId).First() == null)
+            {
+                await SendMessage(new Message()
+                {
+                    Content = JsonSerializer.Serialize(false),
+                    MessageType = MessageType.AddUserToProject,
+                    Token = clientToken
+                });
+                return;
+            }
+
+            if (projectService.GetByCondition(p => p.Id == userToProject.RepositoryId).First() == null)
+            {
+                await SendMessage(new Message()
+                {
+                    Content = JsonSerializer.Serialize(false),
+                    MessageType = MessageType.AddUserToProject,
+                    Token = clientToken
+                });
+                return;
+            }
+               
+
+            await projectService.AddUser(userToProject.UserId, Role.Worker, userToProject.RepositoryId);
+            await SendMessage(new Message()
+            {
+                Content = JsonSerializer.Serialize(true),
+                MessageType = MessageType.AddUserToProject,
+                Token = clientToken
+            });
         }
     }
 }

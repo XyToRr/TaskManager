@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
         Title="RegisterWindow" Height="500" Width="400"
-        Background="{StaticResource BackgroundBrush}">
+        >
     <Grid>
         <StackPanel Orientation="Vertical" Margin="30">
             <Label Content="Login" />

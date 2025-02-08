@@ -8,15 +8,15 @@
         <!--Доробити стилі-->
         
         
-        <ResourceDictionary>
-             <!--Base Colors--> 
+        <!--<ResourceDictionary>
+             --><!--Base Colors--><!-- 
             <Color x:Key="BackgroundColor">#1E1E1E</Color>
             <Color x:Key="ForegroundColor">#D3D3D3</Color>
             <Color x:Key="AccentColor">#5865F2</Color>
             <Color x:Key="HoverColor">#4752C4</Color>
             <Color x:Key="BorderColor">#292B2F</Color>
 
-            <!--Brushes-->
+            --><!--Brushes--><!--
             <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
             <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}"/>
             <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
@@ -24,15 +24,21 @@
             <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
 
 
-            <!--Window Style-->
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
+            </Style>
+            
+            
+
+            --><!--Window Style--><!--
             <Style TargetType="Window">
                 <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
-                <!--<Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>-->
+                --><!--<Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>--><!--
             </Style>
 
             
 
-             <!--Button Style--> 
+             --><!--Button Style--><!-- 
             <Style TargetType="Button">
                 <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
@@ -40,7 +46,7 @@
                 <Setter Property="BorderThickness" Value="2"/>
                 <Setter Property="Padding" Value="10,15"/>
                 <Setter Property="FontSize" Value="16"/>
-                <!--<Setter Property="CornerRadius" Value="8"/>-->
+                --><!--<Setter Property="CornerRadius" Value="8"/>--><!--
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -60,7 +66,7 @@
                 </Style.Triggers>
             </Style>
 
-             <!--TextBox Style--> 
+             --><!--TextBox Style--><!-- 
             <Style TargetType="TextBox">
                 <Setter Property="Background" Value="{StaticResource BorderBrush}"/>
                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
@@ -68,20 +74,20 @@
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="5"/>
                 <Setter Property="FontSize" Value="16"/>
-                <!--<Setter Property="CornerRadius" Value="6"/>-->
+                --><!--<Setter Property="CornerRadius" Value="6"/>--><!--
             </Style>
 
-            <!--Label Style-->
+            --><!--Label Style--><!--
             <Style TargetType="Label">
                
                 <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}"/>
                
                 <Setter Property="FontSize" Value="16"/>
-                <!--<Setter Property="CornerRadius" Value="6"/>-->
+                --><!--<Setter Property="CornerRadius" Value="6"/>--><!--
             </Style>
 
 
-        </ResourceDictionary>
+        </ResourceDictionary>-->
 
 
     </Application.Resources>
