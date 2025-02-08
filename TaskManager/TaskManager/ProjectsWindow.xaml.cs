@@ -54,6 +54,10 @@ namespace TaskManager
 
         }
 
+        private void ProjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
     public class Project
     {

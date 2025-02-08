@@ -13,12 +13,15 @@ namespace TaskManager
     {
         public static IServiceProvider ServiceProvider { get; private set; }
 
+
+        private void Application_Startup(object sender, StartupEventArgs e)
         public static TaskManagerClient Client { get; private set; }
         private async void Application_Startup(object sender, StartupEventArgs e)
         {
             var serviceProvider = new ServiceCollection();
             ConfigurationService(serviceProvider);
             ServiceProvider = serviceProvider.BuildServiceProvider();
+
 
             Client = new TaskManagerClient();
             await Client.ConnectAsync("127.0.0.1", 5000);
@@ -29,6 +32,9 @@ namespace TaskManager
 
             //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
             //mainWindow.Show();
+
+            var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
+            mainWindow.Show();
 
 
             //var mainWindow = ServiceProvider.GetService<AddProjectWindow>();

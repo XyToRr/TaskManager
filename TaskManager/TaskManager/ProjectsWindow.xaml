@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
 
 
-        <ScrollViewer  Height="750" Grid.Row="0">
+        <!--<ScrollViewer  Height="750" Grid.Row="0">
             <ListView Background="{StaticResource BackgroundBrush}" x:Name="ProjectsListView" ItemsSource="{StaticResource TestProjects}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -61,11 +61,81 @@
                         </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+            </ListView>-->
 
 
            
+        <!--</ScrollViewer>-->
+
+        <ScrollViewer Grid.Row="0">
+            <!-- Встановлюємо базовий розмір шрифту для всіх елементів у ListView -->
+            <ListView Background="{StaticResource BackgroundBrush}"
+              x:Name="ProjectsListView"
+              ItemsSource="{StaticResource TestProjects}"
+              HorizontalContentAlignment="Stretch"
+              FontSize="20" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="5"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        Padding="10"
+                                CornerRadius="10"
+                        Margin="10"
+                        HorizontalAlignment="Stretch">
+                            <Grid>
+                                <!-- Колонки: перша для зображення, друга розтягується, третя підбирає потрібну ширину -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                               
+                                <!--<Image Source="https://icon-icons.com/icons2/3001/PNG/512/default_filetype_file_empty_document_icon_187718.png"-->
+                               <!--Width="50"
+                               Height="50"
+                               VerticalAlignment="Center"
+                               Margin="5"
+                               Grid.Column="0"/>-->
+
+                               
+                                <StackPanel  Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Margin="5">
+                                    <!--<TextBlock FontWeight="Bold" FontSize="24" Text="NAME:" />-->
+                                    <TextBlock Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="36" Text="{Binding Name}" />
+                                    <TextBlock Text="Your Role:" FontSize="24" FontWeight="Bold" Margin="0,5,0,0"/>
+                                    <TextBlock Foreground="{StaticResource AccentBrush}" Text="{Binding Role}" FontSize="24"/>
+                                    <TextBlock Text="Description:" FontSize="24" FontWeight="Bold" Margin="0,5,0,0"/>
+                                    <TextBlock Foreground="{StaticResource HoverBrush}" Text="{Binding Description}" FontSize="16" TextWrapping="Wrap"/>
+                                </StackPanel>
+
+                                
+                                <StackPanel Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Margin="5">
+                                    <TextBlock  FontSize="36" Text="Task" HorizontalAlignment="Right"/>
+                                    
+                                    <TextBlock Text="{Binding TaskCount}" Foreground="{StaticResource AccentBrush}"
+                                       FontSize="48"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="24" Text="Created Date:" HorizontalAlignment="Right"/>
+                                    <TextBlock FontSize="24" Foreground="{StaticResource AccentBrush}" Text="{Binding CreatedDate}"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollViewer>
+
+
+
+
 
         <Button Grid.Row="2"  Content="Додати проект" Height="70" Width="300" FontSize="36" 
          Click="AddProject_Click" />
