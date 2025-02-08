@@ -48,26 +48,29 @@ namespace DLL.Context
                 .HasForeignKey(t => t.RepositoryId);
 
             modelBuilder.Entity<TaskModel>()
-                .HasOne(t => t.AssignedUser)
-                .WithMany(u => u.AssignedTasks)
-                .HasForeignKey(t => t.AssignedUserId);
-
-            modelBuilder.Entity<TaskModel>()
                 .HasOne(t => t.CreatedUser)
                 .WithMany(u => u.CreatedTasks)
-                .HasForeignKey(t => t.CreatedUserId);
+               .HasForeignKey(t => t.CreatedUserId)
+               .OnDelete(DeleteBehavior.Restrict); 
 
+            modelBuilder.Entity<TaskModel>()
+                .HasOne(t => t.AssignedUser)
+                .WithMany(u => u.AssignedTasks)
+                .HasForeignKey(t => t.AssignedUserId)
+                .OnDelete(DeleteBehavior.SetNull);
 
+            
             modelBuilder.Entity<TaskComment>()
-                .HasOne(c => c.Task)
+                .HasOne(tc => tc.Task)
                 .WithMany(t => t.Comments)
-                .HasForeignKey(c => c.TaskId);
+                .HasForeignKey(tc => tc.TaskId)
+                .OnDelete(DeleteBehavior.Cascade); 
 
             modelBuilder.Entity<TaskComment>()
-              .HasOne(c => c.User)
-              .WithMany(u => u.WrittenComments)
-              .HasForeignKey(c => c.UserId);
-
+                .HasOne(tc => tc.User)
+                .WithMany(u => u.WrittenComments)
+                .HasForeignKey(tc => tc.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private void SetUpUserRepositoryManyToMany(ModelBuilder modelBuilder)

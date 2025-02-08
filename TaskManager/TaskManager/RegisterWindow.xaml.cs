@@ -22,12 +22,12 @@ namespace TaskManager
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        private readonly TaskManagerClient _taskManagerClient;
+        //private readonly TaskManagerClient _taskManagerClient;
         private readonly UserService _userService;
-        public RegisterWindow(TaskManagerClient taskManagerClient, UserService userService)
+        public RegisterWindow(UserService userService)
         {
             InitializeComponent();
-            _taskManagerClient = taskManagerClient;
+            //_taskManagerClient = taskManagerClient;
             _userService = userService;
 
             _userService.RegisterRequestReceived += OnMessageReceived;
@@ -38,7 +38,7 @@ namespace TaskManager
             if (isRegiter)
             {
                 MessageBox.Show("Реєстрація успішна!", "Успіх", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
+                //this.Close();
             }
         }
 

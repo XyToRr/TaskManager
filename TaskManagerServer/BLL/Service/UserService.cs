@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -26,7 +27,11 @@ namespace BLL.Service
 
         public User FindUserByLoginAndPassword(User user)
         {
-            return GetByCondition(u => u.Login == user.Login && u.PasswordHash == user.PasswordHash).First();
+            var users = GetByCondition(u => u.Login == user.Login && u.PasswordHash == user.PasswordHash);
+            if (users.Any())
+                return users.First();
+            else 
+                return null;
         }
 
         public List<User> FindByMatchingLogin(string login)

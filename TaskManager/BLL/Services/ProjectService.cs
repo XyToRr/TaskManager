@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Models;
+using TaskManager.Configuration.UserAuthentificationHelper;
 
 namespace BLL.Services
 {
@@ -14,9 +15,9 @@ namespace BLL.Services
         public Action<List<Project>> OnCreate;
         public Action<bool> OnUserAdd;
 
-        public ProjectService(TaskManagerClient taskManagerClient)
+        public ProjectService(TaskManagerClient client)
         {
-            _taskManagerClient = taskManagerClient;
+            _taskManagerClient = client;
             _taskManagerClient.MessageReceived += OnMessageReceived;
         }
 
@@ -40,7 +41,8 @@ namespace BLL.Services
             var Message = new Message()
             {
                 MessageType = MessageType.ProjectCreationRequest,
-                Content = json
+                Content = json,
+                Token = UserAuthentificationHelper.Token
             };
             await _taskManagerClient.SendMessageAsync(Message);
         }

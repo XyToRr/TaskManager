@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
         Title="ProjectsWindow" Height="1080" Width="1920"
-        Background="{StaticResource BackgroundBrush}"
+        
         >
 
     <Window.Resources>

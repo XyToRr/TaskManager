@@ -14,13 +14,14 @@ namespace BLL.Services
 {
     public class UserService
     {
-        private readonly TaskManagerClient _taskManagerClient;
         public Action<bool> RegisterRequestReceived;
         public Action<bool> LoginRequestReceived;
 
-        public UserService(TaskManagerClient taskManagerClient) 
+        private TaskManagerClient _taskManagerClient;
+
+        public UserService(TaskManagerClient client) 
         {
-            _taskManagerClient = taskManagerClient;
+            _taskManagerClient = client;
             _taskManagerClient.MessageReceived += OnMessageReceived;
         }
 
