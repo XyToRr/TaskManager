@@ -8,15 +8,6 @@
         Title="ProjectsWindow" Height="1080" Width="1920"
         Background="{StaticResource BackgroundBrush}"
         >
-
-    <Window.Resources>
-        <!-- Список тестових проектів -->
-        <x:Array x:Key="TestProjects" Type="{x:Type local:Project}">
-            <local:Project Name="Test Project 1" Role="Owner" Description="Sample project description" TaskCount="3" CreatedDate="01.02.2025"/>
-            <local:Project Name="Test Project 2" Role="Member" Description="Another project example" TaskCount="5" CreatedDate="15.03.2025"/>
-            <local:Project Name="Test Project 3" Role="Admin" Description="This is just a test project" TaskCount="7" CreatedDate="20.04.2025"/>
-        </x:Array>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.7*"/>
@@ -71,7 +62,6 @@
             <!-- Встановлюємо базовий розмір шрифту для всіх елементів у ListView -->
             <ListView Background="{StaticResource BackgroundBrush}"
               x:Name="ProjectsListView"
-              ItemsSource="{StaticResource TestProjects}"
               HorizontalContentAlignment="Stretch"
               FontSize="20" >
                 <ListView.ItemTemplate>

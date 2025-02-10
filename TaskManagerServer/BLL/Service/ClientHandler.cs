@@ -133,7 +133,10 @@ namespace BLL.Service
             }
 
             clientToken = GenerateToken();
-            server.handlers.TryAdd(clientToken, user.Id);
+            if (server != null && server.handlers != null)
+            {
+                server.handlers.TryAdd(clientToken, user.Id);
+            }
             await SendMessage(new Message
             {
                 Token = clientToken,
