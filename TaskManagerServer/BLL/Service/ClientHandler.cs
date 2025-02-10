@@ -84,6 +84,8 @@ namespace BLL.Service
                         await SendProjectListUpdate(message.Token);
                     break;
                 case MessageType.TaskCreationRequest:
+                    if (IsTokenCorrect(message.Token))
+                        break;
                     break;
                 case MessageType.FindUser:
                     if (IsTokenCorrect(message.Token))
@@ -262,7 +264,7 @@ namespace BLL.Service
             }
                
 
-            await projectService.AddUser(userToProject.UserId, Role.Worker, userToProject.RepositoryId);
+            await projectService.AddUser(userToProject.UserId, userToProject.Role, userToProject.RepositoryId);
             await SendMessage(new Message()
             {
                 Content = JsonSerializer.Serialize(true),
