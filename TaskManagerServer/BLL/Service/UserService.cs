@@ -36,7 +36,7 @@ namespace BLL.Service
 
         public List<User> FindByMatchingLogin(string login)
         {
-            return GetByCondition(u => Regex.IsMatch(u.Login, login)).ToList();
+            return GetByCondition(u => Regex.IsMatch(u.Login, @"\w*" + login + @"\w*")).ToList();
         }
 
     }
