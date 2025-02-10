@@ -85,7 +85,7 @@ namespace BLL.Service
                     break;
                 case MessageType.TaskCreationRequest:
                     if (IsTokenCorrect(message.Token))
-                        break;
+                        await AddTaskToProjectAsync(message);
                     break;
                 case MessageType.FindUser:
                     if (IsTokenCorrect(message.Token))
@@ -272,6 +272,30 @@ namespace BLL.Service
             {
                 Content = JsonSerializer.Serialize(true),
                 MessageType = MessageType.AddUserToProject,
+                Token = clientToken
+            });
+        }
+
+        private async Task AddTaskToProjectAsync(Message message)
+        {
+            var newTaskData = JsonSerializer.Deserialize<TaskModel>(message.Content);
+
+            var userCreated = await userService.GetByCondition(u => u.Id == server.handlers[message.Token]).FirstAsync();
+
+            if (userCreated == null)
+                await SendMessage(new Message()
+                {
+                    Content = "",
+                    MessageType = MessageType.TaskCreationRequest,
+                    Token = clientToken
+                });
+
+            var project = projectService.GetByCondition(p => p.Id == newTaskData.RepositoryId).First();
+            project.Tasks.Add(newTaskData);
+            await SendMessage(new Message()
+            {
+                Content = JsonSerializer.Serialize(project),
+                MessageType = MessageType.TaskCreationRequest,
                 Token = clientToken
             });
         }
