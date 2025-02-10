@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using BLL.Services;
+using Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -22,49 +23,33 @@ namespace TaskManager
     /// </summary>
     public partial class ProjectsWindow : Window
     {
-        private ObservableCollection<Project> Projects { get; set; }
-        public ProjectsWindow()
+        private ObservableCollection<Project> Projects;
+        private ProjectService _projectService;
+        public ProjectsWindow(ProjectService projectService)
         {
             InitializeComponent();
-            //Projects = new ObservableCollection<Project>
-            //{
-            //    new Project { Name = "MainProject", Role = "Owner", Description = "Lorem ipsum Lorem ipsum", TaskCount = 5, CreatedDate = "01.01.2025" },
-            //    new Project { Name = "MainProject", Role = "Owner", Description = "Lorem ipsum Lorem ipsum", TaskCount = 5, CreatedDate = "01.01.2025" }
-            //};
-
-            //ProjectsListView.ItemsSource = Projects;
+            _projectService = projectService;
+            _projectService.AddProject += OnProjectListReceived;
+            _projectService.ProjectListRequest();
         }
         private void AddProject_Click(object sender, RoutedEventArgs e)
-        {
-            //Projects.Add(new Project
-            //{
-            //    Name = "NewProject",
-            //    Role = "Owner",
-            //    Description = "New project description",
-            //    TaskCount = 0,
-            //    CreatedDate = DateTime.Now.ToString("dd.MM.yyyy")
-            //});
-
-
-
-            // отут логіка відкриття вікна
-            
+        {            
             var addProjectWindow = App.ServiceProvider.GetService<AddProjectWindow>();
-            addProjectWindow.ShowDialog();
+            addProjectWindow.Show();
 
+        }
+
+        private async void OnProjectListReceived(List<Project> projectList)
+        {
+            foreach (var project in projectList)
+            {
+                Projects.Add(project);
+            }
         }
 
         private void ProjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-    }
-    public class Project
-    {
-        public string Name { get; set; }
-        public string Role { get; set; }
-        public string Description { get; set; }
-        public int TaskCount { get; set; }
-        public string CreatedDate { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BLL.Services;
 using Domain.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,17 +24,16 @@ namespace TaskManager
     /// </summary>
     public partial class AddProjectWindow : Window
     {
-       // private readonly TaskManagerClient _taskManagerClient;
+        private readonly ProjectService _projectService;
         private readonly UserService _userService;
 
-        public AddProjectWindow(UserService userService)
+        public AddProjectWindow(ProjectService projectService)
         {
-           // _taskManagerClient = taskManagerClient;
-            _userService = userService;
+            _projectService = projectService;
             InitializeComponent();
         }
 
-        private void AddProjectButton_Click(object sender, RoutedEventArgs e)
+        private async void AddProjectButton_Click(object sender, RoutedEventArgs e)
         {
             var proj = new Project
             {
@@ -44,18 +44,19 @@ namespace TaskManager
             };
 
 
-            _ = App.Client.SendMessageAsync(new Message()
-            {
-                Content = JsonSerializer.Serialize(proj),
-                MessageType = MessageType.ProjectCreationRequest,
-                Token = UserAuthentificationHelper.Token
-
-            });
-
-            Close();
+            _projectService.ProjectCreate(proj);
+            var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
+            projWindow.Show();
+            await Dispatcher.BeginInvoke(() => this.Close());
 
 
+        }
 
+        private async void Window_Closed(object sender, EventArgs e)
+        {
+            var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
+            projWindow.Show();
+            await Dispatcher.BeginInvoke(() => this.Close());
         }
     }
 }
