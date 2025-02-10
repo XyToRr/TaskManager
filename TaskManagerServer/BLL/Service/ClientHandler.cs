@@ -97,7 +97,7 @@ namespace BLL.Service
                     break;
                 case MessageType.AddUserToProject:
                     if (IsTokenCorrect(message.Token))
-                        break;
+                        await AddUserToProject(message.Content);
                     break;
                 default:
                     break;
