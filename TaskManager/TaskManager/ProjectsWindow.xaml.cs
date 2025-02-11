@@ -32,10 +32,10 @@ namespace TaskManager
             _projectService.AddProject += OnProjectListReceived;
             _projectService.ProjectListRequest();
         }
-        private void AddProject_Click(object sender, RoutedEventArgs e)
+        private async void AddProject_Click(object sender, RoutedEventArgs e)
         {            
             var addProjectWindow = App.ServiceProvider.GetService<AddProjectWindow>();
-            addProjectWindow.Show();
+            addProjectWindow.ShowDialog();
 
         }
 

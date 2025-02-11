@@ -135,7 +135,7 @@ namespace BLL.Service
             }
 
             clientToken = GenerateToken();
-            if (server != null && server.handlers != null)
+            if (server != null)
             {
                 server.handlers.TryAdd(clientToken, user.Id);
             }

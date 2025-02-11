@@ -19,6 +19,7 @@ namespace BLL.Service
         public TaskManagerServer(IPAddress address, int port)
         {
            listener = new TcpListener(address, port);
+            handlers = new ConcurrentDictionary<string, int>();
         }
 
         public async Task StartAsync()
