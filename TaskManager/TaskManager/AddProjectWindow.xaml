@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Додавання проекту" Height="450" Width="800"
+        Title="Додавання проекту" Height="500" Width="800"
         Background="{StaticResource BackgroundBrush}" Closed="Window_Closed"
         >
     <Grid>

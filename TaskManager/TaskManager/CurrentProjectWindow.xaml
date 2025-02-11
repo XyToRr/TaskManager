@@ -5,29 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
-        Title="Проект..." Height="450" Width="800"
-        Background="{StaticResource BackgroundBrush}">
+        Title="Проект..." Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Background="{StaticResource BackgroundBrush}" Activated="Window_Activated">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.8*" />
             <ColumnDefinition Width="0.3*" />
         </Grid.ColumnDefinitions>
 
-        <!-- ListView для відображення завдань -->
-        <ScrollViewer Grid.Row="0">
-            <ListView Background="{StaticResource BackgroundBrush}"
-                      x:Name="TasksListView"
+        <!-- ListView for Tasks -->
+        <ScrollViewer Grid.Row="0"
+                      VerticalScrollBarVisibility="Auto"
+              HorizontalScrollBarVisibility="Disabled"
+              Padding="10"
+              Background="{StaticResource BackgroundBrush}">
+            <ListView x:Name="TasksListView"
                       ItemsSource="{Binding Tasks}"
+                      Background="{StaticResource BackgroundBrush}"
+                      BorderThickness="0"
                       HorizontalContentAlignment="Stretch"
                       FontSize="20">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="5"
+                        <Border BorderThickness="1"
                                 BorderBrush="{StaticResource BorderBrush}"
-                                Padding="10"
-                                CornerRadius="10"
-                                Margin="10"
-                                HorizontalAlignment="Stretch">
+                                CornerRadius="12"
+                                Padding="15"
+                                Margin="10">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -35,24 +41,39 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
-                                    <TextBlock Foreground="{StaticResource AccentBrush}" FontWeight="Bold" FontSize="36" Text="{Binding Name}" />
-                                    <TextBlock Text="Created By:" FontSize="24" FontWeight="Bold" Margin="0,5,0,0"/>
-                                    <TextBlock Foreground="{StaticResource AccentBrush}" Text="{Binding CreatedBy}" FontSize="24"/>
-                                    <TextBlock Text="Description:" FontSize="24" FontWeight="Bold" Margin="0,5,0,0"/>
+                                <StackPanel Grid.Column="1" Margin="10">
+                                    <TextBlock Foreground="{StaticResource AccentBrush}" 
+                                               FontWeight="Bold" FontSize="36" 
+                                               Text="{Binding Name}" />
+                                    <TextBlock Text="Created By:" FontSize="20" FontWeight="Bold" Margin="0,5,0,0"/>
+                                    <TextBlock Foreground="{StaticResource AccentBrush}" Text="{Binding CreatedBy}" FontSize="18"/>
+                                    <TextBlock Text="Description:" FontSize="20" FontWeight="Bold" Margin="0,5,0,0"/>
                                     <TextBlock Foreground="{StaticResource HoverBrush}" Text="{Binding Description}" FontSize="16" TextWrapping="Wrap"/>
+                                    <TextBlock Text="Created/Deadline Date" FontSize="20" FontWeight="Bold" Margin="0,5,0,0"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="{StaticResource HoverBrush}" Text="{Binding CreatedAt}" FontSize="16" TextWrapping="Wrap"/>
+                                        <TextBlock Text=" / " FontSize="16" TextWrapping="Wrap"/>
+                                        <TextBlock Foreground="{StaticResource HoverBrush}" Text="{Binding Deadline}" FontSize="16" TextWrapping="Wrap"/>
+                                    </StackPanel>
                                 </StackPanel>
 
-                                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5">
-                                    <TextBlock FontSize="36" Text="Priority" HorizontalAlignment="Right"/>
-                                    <TextBlock Text="{Binding Priority}" Foreground="{StaticResource AccentBrush}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Right"/>
-                                    <TextBlock FontSize="24" Text="Status:" HorizontalAlignment="Right"/>
-                                    <ComboBox ItemsSource="{Binding DataContext.Statuses, RelativeSource={RelativeSource AncestorType=Window}}"
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <StackPanel>
+                                        <TextBlock FontSize="24" Text="Priority" HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding Priority}" Foreground="{StaticResource AccentBrush}" 
+                                        FontSize="36" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0,40">
+                                        <TextBlock FontSize="24" Text="Status" HorizontalAlignment="Right"/>
+                                        <ComboBox ItemsSource="{Binding DataContext.Statuses, RelativeSource={RelativeSource AncestorType=Window}}"
                                               SelectedItem="{Binding Status, Mode=TwoWay}"
-                                              FontSize="24"
-                                              Foreground="{StaticResource AccentBrush}"
+                                              FontSize="18"
+                                              
+                                              
                                               Width="200"
                                               HorizontalAlignment="Right"/>
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -61,10 +82,19 @@
             </ListView>
         </ScrollViewer>
 
-
-        <StackPanel Grid.Column="1" Margin="10" VerticalAlignment="Top">
-            <Button Content="Add User"  Margin="5"/>
-            <Button Content="Add Task"  Margin="5" IsEnabled="False"/>
+        
+        <StackPanel Grid.Column="1" Margin="20" VerticalAlignment="Top">
+            <Button Content="Add User" 
+                    Padding="10" Margin="5"
+                    FontSize="18" 
+                    Name="AddUserBtn" Click="AddUserBtn_Click"
+                    />
+            <Button Content="Add Task" 
+                    Padding="10" Margin="5"
+                    FontSize="18" 
+                    Name="AddTaskBtn" Click="AddTaskBtn_Click"
+                    
+                    />
         </StackPanel>
     </Grid>
 </Window>

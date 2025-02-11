@@ -22,10 +22,10 @@ namespace TaskManager
 
 
             Client = new TaskManagerClient();
-            //await Client.ConnectAsync("127.0.0.1", 5000);
+            await Client.ConnectAsync("127.0.0.1", 5000);
 
-            //var mainWindow = ServiceProvider.GetService<LoginWindow>();
-            //mainWindow.Show();
+            var mainWindow = ServiceProvider.GetService<LoginWindow>();
+            mainWindow.Show();
 
 
             //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
@@ -35,10 +35,14 @@ namespace TaskManager
             //var mainWindow = ServiceProvider.GetService<AddProjectWindow>();
             //mainWindow.Show();
 
-            var mainWindow = ServiceProvider.GetService<CurrentProjectWindow>();
-            mainWindow.Show();
+            //var mainWindow = ServiceProvider.GetService<CurrentProjectWindow>();
+            //mainWindow.Show();
 
         }
+
+
+
+
 
         private void ConfigurationService(ServiceCollection services)
         {
