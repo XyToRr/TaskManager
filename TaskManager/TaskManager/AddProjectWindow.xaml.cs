@@ -35,6 +35,13 @@ namespace TaskManager
 
         private async void AddProjectButton_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrWhiteSpace(NameBox.Text))
+            {
+                MessageBox.Show("Назва проекту не може бути порожньою.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                
+                return;
+            }
+            
             var proj = new Project
             {
                 Name = NameBox.Text,

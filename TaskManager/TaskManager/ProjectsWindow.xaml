@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskManager"
         mc:Ignorable="d"
-        Title="ProjectsWindow" Height="1080" Width="1920"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Title="ProjectsWindow" Height="720" Width="1280"
         Background="{StaticResource BackgroundBrush}"
         >
     <Grid>
@@ -16,47 +18,7 @@
         </Grid.RowDefinitions>
 
 
-        <!--<ScrollViewer  Height="750" Grid.Row="0">
-            <ListView Background="{StaticResource BackgroundBrush}" x:Name="ProjectsListView" ItemsSource="{StaticResource TestProjects}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderThickness="1" BorderBrush="{StaticResource ForegroundBrush}" Padding="10" Margin="25">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="100"/>
-                                </Grid.ColumnDefinitions>
-
-                                
-                                <Image Source="https://icon-icons.com/icons2/3001/PNG/512/default_filetype_file_empty_document_icon_187718.png" Width="50" Height="50" Grid.Column="0"/>
-
-                                
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock FontWeight="Bold" FontSize="14" Text="NAME: " />
-                                    <TextBlock FontSize="14" FontWeight="Bold" Text="{Binding Name}" />
-                                    <TextBlock Text="Your Role: " FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Role}" />
-                                    <TextBlock Text="Description: " FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap"/>
-                                </StackPanel>
-
-                                
-                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
-                                    <TextBlock Text="Task" FontSize="14"/>
-                                    <TextBlock Text="{Binding TaskCount}" FontSize="22" FontWeight="Bold"/>
-                                    <TextBlock Text="Created Date:"/>
-                                    <TextBlock Text="{Binding CreatedDate}" FontWeight="Bold"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>-->
-
-
-           
-        <!--</ScrollViewer>-->
+        
 
         <ScrollViewer Grid.Row="0">
             <!-- Встановлюємо базовий розмір шрифту для всіх елементів у ListView -->

@@ -8,11 +8,18 @@
         
         Background="{StaticResource BackgroundBrush}"
         Title="Login" Height="300" Width="450"  
- 
+        WindowStartupLocation="CenterScreen"
+        
+   
+   
+   
         >
         
+    
        
         <Grid>
+        
+
         <StackPanel Orientation="Vertical" Margin="30">
             <Label Content="Логін"/>
             <TextBox x:Name="LoginTextBox" />

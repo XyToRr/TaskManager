@@ -35,6 +35,10 @@ namespace TaskManager
             //Task.Run(async() => await App.Client.ConnectAsync("127.0.0.1", 5000));
         }
 
+
+
+
+
         private async void OnMessageReceive(bool isReceived)
         {
             if (isReceived == true)
