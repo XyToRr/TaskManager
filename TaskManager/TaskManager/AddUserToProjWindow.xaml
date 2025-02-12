@@ -1,0 +1,44 @@
+﻿<Window x:Class="TaskManager.AddUserToProjWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskManager"
+        mc:Ignorable="d"
+        Title="AddUserToProjWindow" Height="720" Width="1280"
+Background="{StaticResource BackgroundBrush}"
+WindowState="Maximized">
+    <Grid><StackPanel>
+        <StackPanel Margin="20">
+            <TextBlock Text="Додавання людини в проект" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                    
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Назва" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    <TextBox FontSize="24"> </TextBox>
+                    <TextBlock Text="Опис" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    <TextBox Height="300" FontSize="24"></TextBox>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    
+                    <TextBlock Text="Пріоріитет" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    <ComboBox Width="200"></ComboBox>
+                    <TextBlock Text="Дедлайн" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    <DatePicker Width="200" FontSize="24"></DatePicker>
+                    <TextBlock Text="Виконавець" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    
+                    <ComboBox Width="200"></ComboBox>
+                </StackPanel>
+                
+            </Grid>
+        </StackPanel>
+            <Button Width="200" Content="Додати"></Button>
+
+        </StackPanel>
+    </Grid>
+</Window>

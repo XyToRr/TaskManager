@@ -55,7 +55,9 @@ namespace TaskManager
             services.AddTransient<ProjectsWindow>();
             services.AddTransient<AddProjectWindow>();
             services.AddTransient<CurrentProjectWindow>();
-            
+            services.AddTransient<AddTaskToProjWindow>();
+            services.AddTransient<AddUserToProjWindow>();
+
             services.AddTransient<ProjectService>((ServiceProvider) => new ProjectService(Client));
             services.AddTransient<UserService>((ServiceProvider) => new UserService(Client));
             services.AddTransient<TaskService>((ServiceProvider) => new TaskService(Client));
