@@ -29,8 +29,11 @@ namespace TaskManager
         
         public ProjectsWindow(ProjectService projectService)
         {
+
             InitializeComponent();
             
+
+
             _projectService = projectService;
             _projectService.AddProject += OnProjectListReceived;
             _projectService.ProjectListRequest();
@@ -54,12 +57,26 @@ namespace TaskManager
             }
         }
 
-        private void ProjectsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        
+
+        private async void ProjectsListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+
+            var projWindow= App.ServiceProvider.GetService<CurrentProjectWindow>();
+            projWindow.Show();
+
+            //надсилаю айді проекту та свій айді
+
+            await Dispatcher.BeginInvoke(() => this.Close());
+
+
+            
 
         }
 
-
-        
+        private void UpdateProjectsList_Click(object sender, RoutedEventArgs e)
+        {
+            _projectService.ProjectListRequest();
+        }
     }
 }
