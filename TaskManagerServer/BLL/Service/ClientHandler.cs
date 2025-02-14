@@ -381,6 +381,7 @@ namespace BLL.Service
 
             var project = projectService.GetByCondition(p => p.Id == newTaskData.RepositoryId).First();
             project.Tasks.Add(newTaskData);
+            await projectService.SaveAsync();
             await SendMessage(new Message()
             {
                 Content = JsonSerializer.Serialize(project),
