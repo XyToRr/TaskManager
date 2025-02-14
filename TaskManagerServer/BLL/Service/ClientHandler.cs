@@ -194,8 +194,10 @@ namespace BLL.Service
 
             try
             {
+                await projectService.AddAsync(project);
                 await projectService.AddUser(user.Id, Role.Owner, project.Id);
                 await SendProjectListUpdate(message.Token);
+                await projectService.SaveAsync();
 
             }
             catch (Exception ex)

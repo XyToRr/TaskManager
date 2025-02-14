@@ -52,8 +52,8 @@ namespace TaskManager
 
 
             _projectService.ProjectCreate(proj);
-            var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
-            projWindow.Show();
+            //var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
+            //projWindow.Show();
             await Dispatcher.BeginInvoke(() => this.Close());
 
 
@@ -61,8 +61,8 @@ namespace TaskManager
 
         private async void Window_Closed(object sender, EventArgs e)
         {
-            var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
-            projWindow.Show();
+            //var projWindow = App.ServiceProvider.GetService<ProjectsWindow>();
+            //projWindow.Show();
             await Dispatcher.BeginInvoke(() => this.Close());
         }
     }

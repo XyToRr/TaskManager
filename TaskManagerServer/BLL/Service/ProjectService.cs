@@ -46,5 +46,7 @@ namespace BLL.Service
             }
            
         }
+
+        public async Task SaveAsync() => await projectRepository.SaveAsync();
     }
 }
