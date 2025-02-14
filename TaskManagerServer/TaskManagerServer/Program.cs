@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using BLL.Service;
+using Domain.Models;
 
 DependencyInjector.ConfigureServices();
 
