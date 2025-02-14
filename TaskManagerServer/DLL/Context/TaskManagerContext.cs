@@ -85,7 +85,7 @@ namespace DLL.Context
             modelBuilder.Entity<UserToProject>()
                 .HasOne(ur => ur.Repository)
                 .WithMany(r => r.Users)
-                .HasForeignKey(ur => ur.UserId);
+                .HasForeignKey(ur => ur.RepositoryId);
         }
     }
 }
