@@ -1,4 +1,5 @@
 ﻿using Domain.Models;
+using Domain.Models.ClientModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
@@ -194,6 +195,7 @@ namespace BLL.Service
 
             try
             {
+                project.CreatedAt = DateTime.Now;
                 await projectService.AddAsync(project);
                 await projectService.AddUser(user.Id, Role.Owner, project.Id);
                 await SendProjectListUpdate(message.Token);
@@ -217,14 +219,35 @@ namespace BLL.Service
                 });
 
             var user = await userService.GetByCondition(u => u.Id == server.handlers[token]).FirstAsync();
-            var projects = projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).ToList();
+            var projects = await projectService.GetByCondition(p => p.Users.Select(u => u.UserId).Contains(user.Id)).Include(p => p.Users).ToListAsync();
 
+            var clientProjectsInfo = new List<ProjectOnClient>();
+            foreach(var proj in projects)
+            {
+                clientProjectsInfo.Add(GetClientProjectInfo(proj, user));
+            }
 
+            //var projectsJson =;
             await SendMessage(new Message
             {
-                Content = JsonSerializer.Serialize(projects),
+                Content = JsonSerializer.Serialize(clientProjectsInfo),
                 MessageType = MessageType.ProjectListUpdate
             });
+        }
+
+
+        private ProjectOnClient GetClientProjectInfo(Project proj, User user)
+        {
+            return new ProjectOnClient()
+            {
+                Name = proj.Name,
+                Description = proj.Description,
+                CreatedDate = proj.CreatedAt.ToShortDateString(),
+                TaskCount = proj.Tasks.Count,
+                Role = proj.Users.Where(up => up.UserId == user.Id).Select(up => up.Role).First().ToString(),
+
+            };
+
         }
 
         private bool IsTokenCorrect(string token) 

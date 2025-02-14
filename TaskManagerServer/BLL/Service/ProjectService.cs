@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLL.Repositories;
 using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Service
 {
