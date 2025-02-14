@@ -53,6 +53,9 @@ namespace TaskManager
 
         }
 
+
+
+
         private void Window_Activated(object sender, EventArgs e)
         {
             // підгрузити всі дані при запуску проги
