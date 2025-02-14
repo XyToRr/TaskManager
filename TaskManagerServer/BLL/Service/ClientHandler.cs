@@ -94,7 +94,7 @@ namespace BLL.Service
                     break;
                 case MessageType.ProjectTasksListRequest:
                     if (IsTokenCorrect(message.Token))
-                        await 
+                        await SendProjectTaskToUser(message);
                     break;
                 case MessageType.TaskAssignment:
                     break;
@@ -173,9 +173,65 @@ namespace BLL.Service
             await SendMessage(new Message { MessageType = MessageType.RegisterAccept });
         }
 
-        private async Task SendProjectTaskToUser()
+        private async Task SendProjectTaskToUser(Message message)
         {
+            var user = await userService.GetByCondition(u => u.Id == server.handlers[message.Token]).FirstAsync();
+            if (user == null)
+            {
+                await SendMessage(new Message
+                {
+                    Content = string.Empty,
+                    MessageType = MessageType.ProjectTasksListRequest
+                });
+                return;
+            }
 
+            var project = await projectService.GetByCondition(p => p.Id == int.Parse(message.Content)).Include(p => p.Tasks).FirstAsync();
+
+            if (project == null)
+            {
+                await SendMessage(new Message
+                {
+                    Content = string.Empty,
+                    MessageType = MessageType.ProjectTasksListRequest
+                });
+                return;
+            }
+
+            var tasks = project.Tasks.Where(t => t.AssignedUserId == user.Id).ToList();
+            
+            var clientTasks = new List<ClientTaskInfo>();
+            foreach (var task in tasks)
+            {
+                clientTasks.Add(GetTaskClientrInfo(task));
+            }
+
+            var role = project.Users.Where(up => up.UserId == user.Id).Select(up => up.Role).First();
+
+            await SendMessage(new Message
+            {
+                Content = JsonSerializer.Serialize(new TaskListRequestResponce()
+                {
+                    Tasks = clientTasks,
+                    Role = role,
+                }),
+                Token = clientToken,
+                MessageType = MessageType.ProjectTasksListRequest
+            });
+        }
+
+        private ClientTaskInfo GetTaskClientrInfo(TaskModel task)
+        {
+            return new ClientTaskInfo()
+            {
+                Name = task.Name,
+                Description = task.Description,
+                CreatedAt = task.CreatedAt.ToShortDateString(),
+                Deadline = task.DeadLine.ToShortDateString(),
+                Priority = task.Priority.ToString(),
+                Status = task.Status.ToString(),
+                CreatedBy = task.CreatedUser.Login,
+            };
         }
 
         public async Task SendMessage(Message message)
