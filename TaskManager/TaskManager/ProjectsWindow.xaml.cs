@@ -1,5 +1,6 @@
 ﻿using BLL.Services;
 using Domain.Models;
+using Domain.Models.ClientModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,13 @@ namespace TaskManager
         public ProjectsWindow(ProjectService projectService)
         {
             InitializeComponent();
+            
             _projectService = projectService;
             _projectService.AddProject += OnProjectListReceived;
             _projectService.ProjectListRequest();
+
+            Projects = new();
+            ProjectsListView.ItemsSource = Projects;
         }
         private async void AddProject_Click(object sender, RoutedEventArgs e)
         {            
@@ -42,6 +47,7 @@ namespace TaskManager
 
         private async void OnProjectListReceived(List<ProjectOnClient> projectList)
         {
+            Projects.Clear();
             foreach (var project in projectList)
             {
                 Projects.Add(project);
