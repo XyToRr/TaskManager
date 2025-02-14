@@ -23,8 +23,9 @@ namespace TaskManager
     /// </summary>
     public partial class ProjectsWindow : Window
     {
-        private ObservableCollection<Project> Projects;
+        private ObservableCollection<ProjectOnClient> Projects;
         private ProjectService _projectService;
+        
         public ProjectsWindow(ProjectService projectService)
         {
             InitializeComponent();
@@ -39,7 +40,7 @@ namespace TaskManager
 
         }
 
-        private async void OnProjectListReceived(List<Project> projectList)
+        private async void OnProjectListReceived(List<ProjectOnClient> projectList)
         {
             foreach (var project in projectList)
             {
@@ -51,5 +52,8 @@ namespace TaskManager
         {
 
         }
+
+
+        
     }
 }

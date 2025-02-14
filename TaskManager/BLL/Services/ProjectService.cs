@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.Models.ClientModels;
 using TaskManager.Configuration.UserAuthentificationHelper;
 
 namespace BLL.Services
@@ -12,7 +13,7 @@ namespace BLL.Services
     public class ProjectService
     {
         private readonly TaskManagerClient _taskManagerClient;
-        public Action<List<Project>> AddProject;
+        public Action<List<ProjectOnClient>> AddProject;
         public Action<bool> OnUserAdd;
 
         public ProjectService(TaskManagerClient client)
@@ -25,7 +26,7 @@ namespace BLL.Services
         {
             if (message.MessageType == MessageType.ProjectListUpdate)
             {
-                var json = JsonSerializer.Deserialize<List<Project>>(message.Content);
+                var json = JsonSerializer.Deserialize<List<ProjectOnClient>>(message.Content);
                 AddProject?.Invoke(json);
             }
             if (message.MessageType == MessageType.AddUserToProject)
