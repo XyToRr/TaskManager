@@ -240,6 +240,7 @@ namespace BLL.Service
         {
             return new ProjectOnClient()
             {
+                Id = proj.Id,
                 Name = proj.Name,
                 Description = proj.Description,
                 CreatedDate = proj.CreatedAt.ToShortDateString(),
