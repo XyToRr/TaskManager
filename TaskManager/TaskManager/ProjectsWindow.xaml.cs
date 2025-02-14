@@ -65,8 +65,11 @@ namespace TaskManager
             var projWindow= App.ServiceProvider.GetService<CurrentProjectWindow>();
             projWindow.Show();
 
-            //надсилаю айді проекту та свій айді
+            var proj = (ProjectOnClient)ProjectsListView.SelectedItem;
+            var projId = proj.Id;
 
+            //надсилаю айді проекта (projId)   проекту та свій token 
+            
             await Dispatcher.BeginInvoke(() => this.Close());
 
 
@@ -76,6 +79,8 @@ namespace TaskManager
 
         private void UpdateProjectsList_Click(object sender, RoutedEventArgs e)
         {
+            
+
             _projectService.ProjectListRequest();
         }
     }
