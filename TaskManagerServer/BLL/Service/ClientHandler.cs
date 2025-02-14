@@ -92,6 +92,10 @@ namespace BLL.Service
                     if (IsTokenCorrect(message.Token))
                        await SendUsersWithMatchingLogins(message.Content);
                     break;
+                case MessageType.ProjectTasksListRequest:
+                    if (IsTokenCorrect(message.Token))
+                        await 
+                    break;
                 case MessageType.TaskAssignment:
                     break;
                 case MessageType.TaskCompletion:
@@ -169,7 +173,10 @@ namespace BLL.Service
             await SendMessage(new Message { MessageType = MessageType.RegisterAccept });
         }
 
-     
+        private async Task SendProjectTaskToUser()
+        {
+
+        }
 
         public async Task SendMessage(Message message)
         {
