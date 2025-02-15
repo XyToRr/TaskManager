@@ -65,12 +65,13 @@ namespace TaskManager
         {
 
             var projWindow= App.ServiceProvider.GetService<CurrentProjectWindow>();
-            projWindow.Show();
-
             var proj = (ProjectOnClient)ProjectsListView.SelectedItem;
             var projId = proj.Id;
 
             ProjectHelper.ProjectId = projId.ToString();
+            
+            projWindow.Show();
+           
             
             await Dispatcher.BeginInvoke(() => this.Close());
 
