@@ -55,7 +55,7 @@ namespace BLL.Services
             {
                 MessageType = MessageType.ProjectTasksListRequest,
                 Token = UserAuthentificationHelper.Token,
-                Content = json
+                Content = id.ToString()
             };
             await _taskManagerClient.SendMessageAsync(Message);
         }
