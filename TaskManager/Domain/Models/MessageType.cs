@@ -21,10 +21,11 @@ namespace Domain.Models
         ProjectListRequest,
         TaskCreationRequest,
         FindUser,
+        ProjectTasksListRequest,
         TaskAssignment,
         TaskCompletion,
         TaskStateUpdate,
         TaskUpdate,
-        AddUserToProject
+        AddUserToProject 
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Models;
+using Domain.Models.ClientModels;
 using TaskManager.Configuration.UserAuthentificationHelper;
 
 namespace BLL.Services
@@ -13,6 +14,7 @@ namespace BLL.Services
     {
         private readonly TaskManagerClient _taskManagerClient;
         public Action<bool> isCreated;
+        public Action<TaskListRequestResponce> TasksGetRequest;
 
         public TaskService(TaskManagerClient taskManagerClient)
         {
@@ -26,6 +28,11 @@ namespace BLL.Services
             {
                 var json = JsonSerializer.Deserialize<bool>(message.Content);
                 isCreated?.Invoke(json);
+            }
+            if (message.MessageType == MessageType.ProjectTasksListRequest)
+            {
+                var json = JsonSerializer.Deserialize<TaskListRequestResponce>(message.Content);
+                TasksGet?.Invoke(json);
             }
         }
 
@@ -41,6 +48,16 @@ namespace BLL.Services
             await _taskManagerClient.SendMessageAsync(Message);
         }
 
-        
+        public async void TaskGet(int id)
+        {
+            var json = JsonSerializer.Serialize(id);
+            var Message = new Message()
+            {
+                MessageType = MessageType.ProjectTasksListRequest,
+                Token = UserAuthentificationHelper.Token,
+                Content = json
+            };
+            await _taskManagerClient.SendMessageAsync(Message);
+        }
     }
 }
