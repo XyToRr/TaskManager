@@ -32,7 +32,7 @@ namespace TaskManager
             InitializeComponent();
             _taskService = taskService;
             _taskService.TasksGetRequest += OnTaskReceived;
-            _taskService.TaskGet(Convert.ToInt32(ProjectHelper.ProjectId));
+            //_taskService.TaskGet(Convert.ToInt32(ProjectHelper.ProjectId));
             ViewModel = new TaskViewModel();
             DataContext = ViewModel;
             
@@ -72,11 +72,11 @@ namespace TaskManager
 
         public void OnTaskReceived(TaskListRequestResponce taskList)
         {
-            ViewModel.Tasks.Clear();
-            foreach (var task in taskList.Tasks)
-            {
-                ViewModel.Tasks.Add(task);
-            }
+            //ViewModel.Tasks.Clear();
+            //foreach (var task in taskList.Tasks)
+            //{
+            //    ViewModel.Tasks.Add(task);
+            //}
         }
 
         private void Window_Activated(object sender, EventArgs e)

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="AddUserToProjWindow" Height="720" Width="1280"
 Background="{StaticResource BackgroundBrush}"
-WindowState="Maximized">
+>
     <Grid><StackPanel>
         <StackPanel Margin="20">
             <TextBlock Text="Додавання людини в проект" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>

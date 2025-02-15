@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Нове завдання" Height="720" Width="1280"
         Background="{StaticResource BackgroundBrush}"
-        WindowState="Maximized"
+        
         >
     <Grid>
         <StackPanel Margin="20">

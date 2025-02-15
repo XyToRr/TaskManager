@@ -34,15 +34,16 @@ namespace TaskManager
                 }
             }
 
-            if (res != MessageBoxResult.Yes)
-            {
-                var loginWindow = ServiceProvider.GetService<LoginWindow>();
-                loginWindow.Show();
+            var loginWindow = ServiceProvider.GetService<LoginWindow>();
+            if (res == MessageBoxResult.Yes) { 
+                loginWindow.Close();
             }
             else
             {
-                Application.Current.Shutdown();
+                loginWindow.Show();
             }
+            
+            
 
 
             //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();
