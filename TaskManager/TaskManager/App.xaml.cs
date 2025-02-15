@@ -22,10 +22,27 @@ namespace TaskManager
 
 
             Client = new TaskManagerClient();
-            await Client.ConnectAsync("127.0.0.1", 5000);
 
-            var mainWindow = ServiceProvider.GetService<LoginWindow>();
-            mainWindow.Show();
+
+            MessageBoxResult res= MessageBoxResult.None;
+
+            while (!(await Client.ConnectAsync("127.0.0.1", 5000)))
+            {
+                res = MessageBox.Show("Cannot connect! Server is closed. Do you want to exit?","Error",MessageBoxButton.YesNo);
+                if (res == MessageBoxResult.Yes) { 
+                    break;
+                }
+            }
+
+            if (res != MessageBoxResult.Yes)
+            {
+                var loginWindow = ServiceProvider.GetService<LoginWindow>();
+                loginWindow.Show();
+            }
+            else
+            {
+                Application.Current.Shutdown();
+            }
 
 
             //var mainWindow = ServiceProvider.GetService<ProjectsWindow>();

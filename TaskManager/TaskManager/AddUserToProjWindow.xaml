@@ -11,33 +11,20 @@ WindowState="Maximized">
     <Grid><StackPanel>
         <StackPanel Margin="20">
             <TextBlock Text="Додавання людини в проект" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                    <ColumnDefinition Width="0.5*"></ColumnDefinition>
-                    
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <TextBlock Text="Назва" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-                    <TextBox FontSize="24"> </TextBox>
-                    <TextBlock Text="Опис" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-                    <TextBox Height="300" FontSize="24"></TextBox>
-                </StackPanel>
+                <Grid Grid.Column="0" Width="600">
+                    <StackPanel >
+                    <TextBlock Text="Логін працівника" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    <TextBox FontSize="24"></TextBox>
+                    <TextBlock Text="Працівники" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
+                    <ListBox  FontSize="24" Height="250"></ListBox>
+                    <CheckBox FontSize="24" HorizontalAlignment="Center" VerticalContentAlignment="Center" Content="Адмін" Margin="0,20"/>
+                    <Button Width="200" Content="Додати"></Button>
 
-                <StackPanel Grid.Column="1">
-                    
-                    <TextBlock Text="Пріоріитет" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-                    <ComboBox Width="200"></ComboBox>
-                    <TextBlock Text="Дедлайн" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-                    <DatePicker Width="200" FontSize="24"></DatePicker>
-                    <TextBlock Text="Виконавець" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20"/>
-                    
-                    <ComboBox Width="200"></ComboBox>
                 </StackPanel>
+                </Grid>
                 
-            </Grid>
-        </StackPanel>
-            <Button Width="200" Content="Додати"></Button>
+            </StackPanel>
+           
 
         </StackPanel>
     </Grid>

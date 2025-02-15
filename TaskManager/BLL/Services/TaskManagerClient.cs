@@ -25,10 +25,19 @@ namespace BLL.Services
             _client = new TcpClient();
         }
 
-        public async Task ConnectAsync(string ipAddress, int port)
+        public async Task<bool> ConnectAsync(string ipAddress, int port)
         {
-            if (IsConnected) {  return; }
-            await _client.ConnectAsync(ipAddress, port);
+
+            if (IsConnected) {  return false; }
+
+            try
+            {
+                await _client.ConnectAsync(ipAddress, port);
+            }
+            catch (Exception ex) { 
+                return false;
+            }
+            
             IsConnected = true;
             _cancellationTokenSource = new CancellationTokenSource();
 
@@ -37,6 +46,7 @@ namespace BLL.Services
             _streamWriter = new StreamWriter(stream) { AutoFlush = true };
 
             _ = ReceiveMessageAsync();
+            return true;
         }
 
         public async Task ReceiveMessageAsync()

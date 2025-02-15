@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -54,12 +55,14 @@ namespace TaskManager
 
         private void AddUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            var addUserWindow= App.ServiceProvider.GetService<AddUserToProjWindow>();
+            addUserWindow.ShowDialog();
         }
 
         private void AddTaskBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            var addTaskWindow = App.ServiceProvider.GetService<AddTaskToProjWindow>();
+            addTaskWindow.ShowDialog();
         }
         private void UpdateTasksBtn_Click(Object sender, RoutedEventArgs e)
         {
