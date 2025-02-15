@@ -95,6 +95,12 @@
                     Name="AddTaskBtn" Click="AddTaskBtn_Click"
                     
                     />
+            <Button Content="Update tasks" 
+                Padding="10" Margin="5"
+                FontSize="18" 
+                Name="UpdateTasks" Click="UpdateTasksBtn_Click"
+        
+                />
         </StackPanel>
     </Grid>
 </Window>

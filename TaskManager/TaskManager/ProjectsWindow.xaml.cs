@@ -1,6 +1,7 @@
 ﻿using BLL.Services;
 using Domain.Models;
 using Domain.Models.ClientModels;
+using Domain.Models.Configuration.UserAuthentificationHelper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -25,15 +26,16 @@ namespace TaskManager
     public partial class ProjectsWindow : Window
     {
         private ObservableCollection<ProjectOnClient> Projects;
-        private ProjectService _projectService;
+        private readonly ProjectService _projectService;
+        private readonly TaskService _taskService;
         
-        public ProjectsWindow(ProjectService projectService)
+        public ProjectsWindow(ProjectService projectService, TaskService taskService)
         {
 
             InitializeComponent();
-            
 
 
+            _taskService = taskService;
             _projectService = projectService;
             _projectService.AddProject += OnProjectListReceived;
             _projectService.ProjectListRequest();
@@ -68,7 +70,7 @@ namespace TaskManager
             var proj = (ProjectOnClient)ProjectsListView.SelectedItem;
             var projId = proj.Id;
 
-            //надсилаю айді проекта (projId)   проекту та свій token 
+            ProjectHelper.ProjectId = projId.ToString();
             
             await Dispatcher.BeginInvoke(() => this.Close());
 
