@@ -22,7 +22,7 @@
 
         <ScrollViewer Grid.Row="0">
             <!-- Встановлюємо базовий розмір шрифту для всіх елементів у ListView -->
-            <ListView Background="{StaticResource BackgroundBrush}"
+            <ListView Margin="10" Background="{StaticResource BackgroundBrush}"
               x:Name="ProjectsListView"
               HorizontalContentAlignment="Stretch"
               FontSize="20" MouseDoubleClick="ProjectsListView_MouseDoubleClick" >

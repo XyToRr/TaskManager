@@ -21,7 +21,7 @@
               HorizontalScrollBarVisibility="Disabled"
               Padding="10"
               Background="{StaticResource BackgroundBrush}">
-            <ListView x:Name="TasksListView"
+            <ListView Margin="10" x:Name="TasksListView"
                       ItemsSource="{Binding Tasks}"
                       Background="{StaticResource BackgroundBrush}"
                       BorderThickness="0"
