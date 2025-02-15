@@ -32,7 +32,7 @@ namespace BLL.Services
             if (message.MessageType == MessageType.ProjectTasksListRequest)
             {
                 var json = JsonSerializer.Deserialize<TaskListRequestResponce>(message.Content);
-                TasksGet?.Invoke(json);
+                TasksGetRequest?.Invoke(json);
             }
         }
 
